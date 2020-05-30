@@ -1,0 +1,330 @@
+<section id="manage-users">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="col-lg-6 pull-left">
+                    <h4 class="mb-0"> {{'Report Management'}}</h4>
+                </div>
+                <div class="col-lg-6 pull-right">
+                    <a href="https://analytics.google.com/analytics/web/?authuser=0#/report-home/a147444882w209523096p201637368" target="_blank" class="btn btn-large text-uppercase btn-success" title=">Google Analytics" alt=">Google Analytics">Google Analytics</a>
+                </div>
+            </div>
+        </div>
+        <hr class="hr-border" />
+    </div>
+</section>  
+<div class="tabs-outer pb-4">
+    <div class="container-fluid">
+        <ngb-tabset class="newsletter-tabs" justify="center">
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span (click)="getUserGraphData()">User Graph</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <section class="pt-4 mt-2" id="inner">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="userType($event)">
+                                            <option value="" selected="selected">Select User Type</option>
+                                            <option value="1">Verified</option>
+                                            <option value="0">Un-verified</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="selectMonth($event)">
+                                            <option value="">Select Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="selectYear($event)">
+                                            <option value="">Select Year</option>
+                                            <option value="2019" selected="selected">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="selectFilter($event)">
+                                            <option value="0">Filter Type</option>
+                                            <option value="1" selected="selected">Year</option>
+                                            <option value="2">Month</option>
+                                            <option value="3">Weak</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=""><div class="row"><hr/></div></div>
+                    </section>
+                    <section class="client-mngmnt">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="card">
+                                        <div class="card-text">
+                                            <div class="card-body ">
+                                                <h6 class="pt-3 ml-5" #loader>{{pageTitle}}</h6>
+                                            </div>
+                                            <div class="p-5">
+                                                <div style="width: 98%;">
+                                                    <canvas baseChart [chartType]="'line'" [colors]="chartColors" [colors]="chartColors"
+                                                        [datasets]="chartData" [labels]="chartLabels" [legend]="false">
+                                                    </canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span (click)="getPlantLogGraphData()">Plant Log</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <section class="pt-4 mt-2" id="inner">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="plantLogSelectCity($event)">
+                                            <option value="">Select City</option>
+                                            <option value="{{city.city}}" *ngFor="let city of plantLogCityList; let i = index;">{{city.city}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="plantLogSelectCountry($event)">
+                                            <option value="">Select Country</option>
+                                            <option value="{{country.country}}" *ngFor="let country of plantLogCountryList; let i = index;">{{country.country}}</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="plantLogSelectMonth($event)">
+                                            <option value="">Select Month</option>
+                                            <option value="01">January</option>
+                                            <option value="02">February</option>
+                                            <option value="03">March</option>
+                                            <option value="04">April</option>
+                                            <option value="05">May</option>
+                                            <option value="06">June</option>
+                                            <option value="07">July</option>
+                                            <option value="08">August</option>
+                                            <option value="09">September</option>
+                                            <option value="10">October</option>
+                                            <option value="11">November</option>
+                                            <option value="12">December</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="plantLogSelectYear($event)">
+                                            <option value="">Select Year</option>
+                                            <option value="2019">2019</option>
+                                            <option value="2020">2020</option>
+                                            <option value="2021">2021</option>
+                                            <option value="2022">2022</option>
+                                            <option value="2023">2023</option>
+                                            <option value="2024">2024</option>
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                            <option value="2027">2027</option>
+                                            <option value="2028">2028</option>
+                                            <option value="2029">2029</option>
+                                        </select>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <select class="round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="plantLogSelectFilter($event)">
+                                            <option value="0">Filter Type</option>
+                                            <option value="1" selected="selected">Year</option>
+                                            <option value="2">Month</option>
+                                            <option value="3">Weak</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class=""><div class="row"><hr/></div></div>
+                    </section>
+                    <section class="client-mngmnt">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="card">
+                                        <div class="card-text">
+                                            <div class="card-body ">
+                                                <h6 class="pt-3 ml-5" #loader>{{pageTitle}}</h6>
+                                            </div>
+                                            <div class="p-5">
+                                                <div style="width: 98%;">
+                                                    <canvas baseChart [chartType]="'line'" [colors]="chartColors" [colors]="chartColors"
+                                                        [datasets]="plantLogChartData" [labels]="plantLogChartLabels" [legend]="false">
+                                                    </canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span (click)="getPlantTypeData()">Plant Type</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <section class="pt-4 mt-2" id="inner">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right mr-2">
+                                        <input class="w-100 mb-4 text-center round-drop border-select pl-4 pr-5 font-weight-bold form-control" type="text" #searchval (keyup)="searchByKeyword(searchval.value)" Placeholder="Search By Keyword"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class=""><div class="row"><hr/></div></div> -->
+                    </section>
+                    <section class="client-mngmnt">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="card">
+                                        <div class="card-text">
+                                            <div class="p-5">
+                                                <div style="width: 98%;">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Plant Type</th>
+                                                                <th>Seed Brand</th>
+                                                                <th>Starin</th>
+                                                                <th>User Name</th>
+                                                                <th>Total Comments</th>
+                                                                <th>Total Likes</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let plants of plantTypeData; let i = index;">
+                                                                <td>{{(i+1)}}</td>
+                                                                <td>{{plants.plantType}}</td>
+                                                                <td>{{plants.seedBrand}}</td>
+                                                                <td>{{plants.strain}}</td>
+                                                                <td>{{plants.userName}}</td>
+                                                                <td>{{plants.commentCount}}</td>
+                                                                <td>{{plants.likeCount}}</td>
+                                                            </tr>
+                                                            <tr *ngIf="plantGlobalCount>plantCount">
+                                                                <td colspan="7">
+                                                                    <p class="text-center">
+                                                                        <button (click)="onScroll()" class="btn btn-large text-uppercase btn-success" type="button">{{this.plantSeemore}}</button>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </ng-template>
+            </ngb-tab>
+            <ngb-tab>
+                <ng-template ngbTabTitle>
+                    <span (click)="getProductUsedCountData()">Product Used(Count)</span>
+                </ng-template>
+                <ng-template ngbTabContent>
+                    <section class="pt-4 mt-2" id="inner">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right mr-2">
+                                        <input type="date" class="w-100 mb-4 text-center round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="productUsedSearchByEndDate($event)" Placeholder="End Date"/>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <input type="date" class="w-100 mb-4 text-center round-drop border-select pl-4 pr-5 font-weight-bold form-control" (change)="productUsedSearchByStartDate($event)" Placeholder="Start Date"/>
+                                    </div>
+                                    <div class="pull-right mr-2">
+                                        <input type="text" class="w-100 mb-4 text-center round-drop border-select pl-4 pr-5 font-weight-bold form-control" #searchval (keyup)="productUsedSearchByKeyword(searchval.value)" Placeholder="Search By Keyword"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class=""><div class="row"><hr/></div></div> -->
+                    </section>
+                    <section class="client-mngmnt">
+                        <div class="">
+                            <div class="row">
+                                <div class="col-12 ">
+                                    <div class="card">
+                                        <div class="card-text">
+                                            <div class="p-5">
+                                                <div style="width: 98%;">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Product Name</th>
+                                                                <th>Seed Brand</th>
+                                                                <th>Used Count</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr *ngFor="let products of productUsedData; let i = index;">
+                                                                <td>{{(i+1)}}</td>
+                                                                <td>{{products.name}}</td>
+                                                                <td>{{products.brand}}</td>
+                                                                <td>{{products.plantUsedIdCount}}</td>
+                                                            </tr>
+                                                            <tr *ngIf="productUsedGlobalCount>productUsedCount">
+                                                                <td colspan="4">
+                                                                    <p class="text-center">
+                                                                        <button (click)="productUsedOnScroll()" class="btn btn-large text-uppercase btn-success" type="button">{{this.productUsedSeemore}}</button>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </ng-template>
+            </ngb-tab>
+        </ngb-tabset>
+    </div>
+</div>

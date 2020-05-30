@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="12px" viewBox="0 0 12 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: sketchtool 53.2 (72643) - https://sketchapp.com -->
+    <title>0396F058-D50D-4E3E-90A8-DD8635400A4D</title>
+    <desc>Created with sketchtool.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="-2.22044605e-14%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#FD1730" offset="0%"></stop>
+            <stop stop-color="#9E101F" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="customer-satisfaction" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="7" transform="translate(-960.000000, -333.000000)">
+            <g id="cell" transform="translate(284.000000, 324.000000)">
+                <g id="ic_cross" transform="translate(676.000000, 9.000000)">
+                    <circle id="Oval" fill="url(#linearGradient-1)" opacity="0.7" cx="6" cy="6" r="6"></circle>
+                    <g id="Group" transform="translate(3.281250, 3.210938)" fill="#FFFFFF">
+                        <path d="M5.0244375,5.4969375 C4.9044375,5.4969375 4.784625,5.4511875 4.6929375,5.3596875 L0.1501875,0.81675 C-0.033,0.6335625 -0.033,0.3369375 0.1501875,0.1539375 C0.333375,-0.0290625 0.63,-0.02925 0.813,0.1539375 L5.3559375,4.696875 C5.539125,4.8800625 5.539125,5.1766875 5.3559375,5.3596875 C5.26425,5.4511875 5.1444375,5.4969375 5.0244375,5.4969375 Z" id="Path"></path>
+                        <path d="M0.4815,5.4969375 C0.3615,5.4969375 0.2416875,5.4511875 0.15,5.3596875 C-0.0331875,5.1765 -0.0331875,4.879875 0.15,4.696875 L4.6929375,0.1539375 C4.876125,-0.02925 5.17275,-0.02925 5.35575,0.1539375 C5.53875,0.337125 5.5389375,0.63375 5.35575,0.81675 L0.813,5.3596875 C0.7215,5.4511875 0.6015,5.4969375 0.4815,5.4969375 Z" id="Path"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

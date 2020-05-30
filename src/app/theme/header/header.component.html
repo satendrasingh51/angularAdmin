@@ -1,0 +1,49 @@
+<div class="container-fluid header-adjust h-100">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="pull-right d-flex justify-content-end pt-3">   
+        <div class="contols">
+          <div class="row">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block userdropdown">
+                 
+                <i class="fal fa-arrow-alt-from-top"></i>  <div class="mr-3  user-circle img-profile" id="dropdown1" ngbDropdownToggle>
+                <img [src]="profile_img"></div>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button routerLink="/theme/modules/settings/profile" class="text-center"
+                    ngbDropdownItem>Profile</button>
+                  <button type="button" (click)="openVerticallyCentered(content)" class="text-center" ngbDropdownItem>Logout</button>
+                  <!-- <button ngbDropdownItem></button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+    <section id="modal-header">
+     
+      <div class="container">
+        <div class="row p-4">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="text-center"> Are you sure want to Logout? </h4>
+          </div>
+        </div>
+  
+      </div>
+    </section>
+    <section>
+      <div class="container frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn bg-info text-white col-md-3 mr-5" (click)=" logout()">Yes</button>
+            <button type="button" class="ml-3 btn btn-danger col-md-3 ml-5" (click)="modal.close('Close click')">No
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>

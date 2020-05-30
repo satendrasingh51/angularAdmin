@@ -1,0 +1,55 @@
+
+#dashborad-main{
+    hr {
+      border-top: 2px solid rgba(0, 0, 0, 0.1);
+    }
+    .dis-dashboard h4 {
+      font-size: 26px;
+      font-weight: normal;
+      }
+    }     
+  
+  #inner-content {
+    .form-group label {
+      font-size: 16px;
+      }
+      .card{
+        min-height: 110px;
+        max-height: 169px;
+        // background: #ffffff !important;
+        //  color: #404e67;
+        // box-shadow: 0 0 8px 0px #0000001f;
+      }
+    .card-adjust {   
+      .card-content .fa{
+        font-size: 35px;
+      }      
+    }
+
+    
+  }
+      
+   .ngx-datepicker-position-bottom-right{
+     z-index: 500!important;
+  }
+  .gradient1{
+    background: linear-gradient(to right,#008385 0,#00E7EB 89%); 
+  }
+  .gradient2{
+    background: linear-gradient(to right, #A1051D,#F5515F  89%);
+  }
+  .gradient3{
+    background: linear-gradient(to right,#FF864A 0,#FFCAB0 100%);
+  }
+  .gradient4{
+    background: linear-gradient(to right,#11A578 0,#32EAB2 100%);
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  

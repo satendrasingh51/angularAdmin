@@ -1,0 +1,46 @@
+<section id="user-details">
+  <div class="container-fluid dis-dashboard">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="custom-breadcrumb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/theme/modules/newsletter-management">Manage Newsletter</a>
+              </li>
+              <li class="breadcrumb-item active">Gallery</li>
+            </ol>
+          </nav>
+        </div>
+        <h4 class="mb-0">
+       <!-- <button type="button" 
+            (click)="download()" class="ml-2 btn btn-green text-white pull-right">Export</button>  -->
+            <a target="_self" class="ml-2 btn btn-green text-white pull-right"  download (click)="download()">Export</a>
+       </h4>
+       <div class="pull-right">
+       </div>
+      </div>
+    </div>
+    <hr class="hr_adjust">
+  </div>
+</section>
+
+<section class="pb-2" id="inner-content">
+  <div class="container-fluid">
+
+    <div class="row ">
+      <div class="col-md-3 mb-4 newsletter-img" *ngFor="let data of responsedata">
+        <a href="javascript:void(0);" (click)="exportImages(data.imageUrl)" [download]="getFileName(data.imageUrl)">
+          <img *ngIf="data.type=='image'" class="h-100 w-100 img-thumbnail" bind-src="data.imageUrl" alt="">
+        </a>
+        <video  *ngIf="data.type=='video'" width="320" height="240" controls muted>
+          <source [src]="data.imageUrl" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+        <button class="btn btn-green col-md-4" (click)="pagechange()" [disabled]="btn_disabled"> LOADMORE </button> 
+    </div>
+  </div>
+</section>
+

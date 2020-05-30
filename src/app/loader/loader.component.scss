@@ -1,0 +1,59 @@
+
+// Browser Prefixes
+@mixin transform($transforms) {
+    -webkit-transform: $transforms;
+    -moz-transform: $transforms;
+    -ms-transform: $transforms;
+    transform: $transforms;
+   }
+   // Rotate
+   @mixin rotate($deg) {
+    @include transform(rotate(#{$deg}deg));
+   }
+   // Scale
+   @mixin scale($scale) {
+    @include transform(scale($scale));
+   }
+   // Translate
+   @mixin translate($x, $y) {
+    @include transform(translate($x, $y));
+   }
+   @mixin translateX($x) {
+    @include transform(translateX($x));
+   }
+   @mixin translateY($y) {
+    @include transform(translateY($y));
+   }
+
+
+
+/*loader css*/
+.loader-wrapper{
+    height: 100vh;
+    width:100%;
+    position: fixed;
+    top: 0;
+    left:0;
+    z-index:9999;
+    background:rgba(0, 0, 0, 0.75);
+    #box {
+        display: block;
+        height:60px;
+        width: 60px;
+        border-radius: 5px;
+        animation: spin 2s infinite;
+        background-image: url(../../assets/images/gro-doc-loader.svg);
+        background-size: cover;
+      }
+}
+
+  
+  @keyframes spin {
+    0% {
+      @include rotate(0);
+    }
+    90%, 100% {
+      @include rotate(540);
+
+    }
+  }

@@ -1,0 +1,22 @@
+.ratings{
+    ul{
+        width: 100%;
+        text-align: center;
+        li{
+            width: 10%;
+            font-size: 30px;
+        }
+    }
+}
+.fa{
+    color: hsl(61, 19%, 85%);
+}
+// .fagreen{
+//     color: #fabf0c !important;
+// }
+.faactive{
+    color: #fabf0c !important;
+}
+.fa-star-half-o:before{
+    color:#fabf0c;
+}

@@ -1,0 +1,165 @@
+<div class="container-fluid my-auto">
+  <div class="row align-items-center">
+    <div class="col-md-12">
+      <h4> Manage Subscription</h4>
+      <label>{{collectionSize}} Subscribers</label>
+    </div>
+  </div>
+  <hr class="hr-border mt-0 pt-0">
+  <div class="row">
+    <div class="col">
+      <div class="custom-breadcrumb">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/theme/modules/subscription">Manage Subscription</a></li>
+            <li class="breadcrumb-item active">View</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="ml-auto col-md-3">
+      <div class="d-flex justify-content-end">
+        <button class="btn btn-green" *ngIf="subscriberdata?.type!=2"  [routerLink]="['/theme/modules/subscription/edit',subscriberdata?._id]">Edit Plan</button>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="form-group row pt-2">
+        <label class="col-sm-2 text-right font-weight-bold">Title :</label>
+        <div class="col-sm-8">
+          <div class="md-form mt-0">
+            <label>{{subscriberdata?.title}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row pt-2">
+        <label class="col-sm-2 text-right font-weight-bold">Price :</label>
+        <div class="col-sm-8">
+          <div class="md-form mt-0">
+            <label>{{subscriberdata?.cost}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row pt-2">
+        <label class="col-sm-2 text-right font-weight-bold">Description :</label>
+        <div class="col-sm-8">
+          <div class="md-form mt-0">
+            <label>{{(subscriberdata?.description)?(subscriberdata?.description):(subscriberdata?.discription)}}</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row pt-2">
+        <label class="col-sm-2 text-right font-weight-bold">Privilages :</label>
+        <div class="col-sm-8">
+          <div class="md-form mt-0">
+            <label *ngFor="let data of subscriberdata?.privilage">{{data}} &nbsp;</label>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <hr class="hr-border" />
+  <div class="row pb-3">
+    <div class="col-md-4">
+      <div class="input-group">
+        <input class="form-control pl-2 " maxlength="30" placeholder="Search..." type="text" (input)="serachstring($event)" maxlength="30">
+      </div>
+    </div>
+  </div>
+<form [formGroup]="listserachform" (ngSubmit)="onSubmit()">
+
+  <div class="row">
+    <div class="col-md-4">
+      <label for="adding date">
+        <h6>Start Date</h6>
+      </label>
+      <div class="form-group mt-2 form-inline">
+        <label class="pull-left mr-2" for="datepicker">From </label>
+        <input class="input-adjust form-control" (click)="d2.toggle()" placeholder="dd/mm/yyyy" name="dp2" ngbDatepicker
+          #d2="ngbDatepicker"  formControlName="startfromdate"  (ngModelChange)="startfrom_date($event)" [maxDate]="maxDate" [readonly]="true">
+
+        <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+        <input class="input-adjust form-control" (click)="d3.toggle()" placeholder="dd/mm/yyyy" name="dp3" ngbDatepicker
+          #d3="ngbDatepicker" formControlName="starttodate"  (ngModelChange)="startto_date($event)"
+          [minDate]="minDate" [maxDate]="maxDate1" [readonly]="true">
+      </div>
+
+    </div>
+    <div class="col-md-4">
+      <label for="adding date">
+        <h6>End  Date</h6>
+      </label>
+      <div class="form-group mt-2 form-inline">
+        <label class="pull-left mr-2" for="datepicker">From </label>
+        <input class="input-adjust form-control" (click)="d4.toggle()" placeholder="dd/mm/yyyy" name="dp2" ngbDatepicker
+          #d4="ngbDatepicker" formControlName="endfromdate"(ngModelChange)="endfrom_date($event)"[minDate]="minDate"
+          [readonly]="true" >
+
+        <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+        <input class="input-adjust form-control" (click)="d5.toggle()" placeholder="dd/mm/yyyy" name="dp3" ngbDatepicker
+          #d5="ngbDatepicker"  formControlName="endtodate" (ngModelChange)="endto_date($event)" [minDate]="minDate1"
+          [readonly]="true" >
+      </div>
+    </div>
+    <div class="col-md-4 my-auto">
+      <div class="d-flex  mt-3 justify-content-end">
+        <button class="btn btn-green mr-3" type="submit">Filter</button>
+        <button class="btn btn-danger" type="button" (click)="reset()">Reset</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+</div>
+
+<section id="data-table">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-text">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead class="btn-green">
+                  <tr>
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col" sortable="name">Nutrient Brand Name</th>
+                    <th scope="col" sortable="area">Email</th>
+
+                    <th scope="col" sortable="name"> Start Date</th>
+                    <th scope="col" sortable="name"> End Date</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of subscriberlist | paginate: {itemsPerPage: limit, currentPage: page, totalItems: collectionSize } let i=index">
+                      <td>{{i+1}}</td>
+                  <td>{{data?.brand}}</td>
+                  <td>{{data?.email}}</td>
+                  <td>{{customdate(data.subscription?.subscriptionStatrtDate)}}</td>
+                  <td>{{customdate(data?.subscription?.subscriptionEndDate)}}</td>
+                   
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div>
+              <pagination-controls *ngIf="collectionSize !=0 " (pageChange)="pagechange($event)" maxSize="5"
+              directionLinks="true" responsive="true" previousLabel="Previous" nextLabel="Next">
+            </pagination-controls>
+            </div>
+            <div class="text-center" *ngIf="collectionSize==0" > No Data Found</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

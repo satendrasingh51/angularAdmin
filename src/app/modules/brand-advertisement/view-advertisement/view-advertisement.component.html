@@ -1,0 +1,198 @@
+<section id="Blog-details">
+    <div class="container-fluid dis-dashboard">
+      <div class="custom-breadcrumb">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="#" routerLink="/theme/modules/brand-advertisement">Manage
+                    Brand Advertisement</a></li>
+                <li class="breadcrumb-item active">Edit
+                  Advertisement</li>
+              </ol>
+        </nav>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <h4 class="mb-0">  View Advertisement </h4>
+        </div>
+      </div>
+      <hr class="hr-border" />
+    </div>
+  </section>
+
+  <h5 *ngIf="acceptreqmsg" class="position-fixed push-top alert alert-success"> Ad/Requset Accepted Successfully.</h5>
+  <h5 *ngIf="rejectreqmsg" class="position-fixed push-top alert alert-danger"> Ad/Requset Rejected Successfully.</h5>
+
+
+
+
+
+  <section id="inner-content">
+    <div class="container-fluid">
+      <div class="row">
+        
+        <div class="col-md-8">
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold">Brand Name :</label>
+            </div>
+            <div class="col-md-9">
+                {{responsedata.brand}}
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold">Title :</label>
+            </div>
+            <div class="col-md-9">
+                {{responsedata.title}}
+            </div>
+          </div>
+  
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold ">URL/Link :</label>
+            </div>
+            <div class="col-md-9">
+            {{responsedata.urlLink}}
+            </div>
+          </div>
+  
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold">Start Date :</label>
+            </div>
+            <div class="col-md-9">
+              {{startdate}}
+            </div>
+          </div>
+  
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold">End Date :</label>
+            </div>
+            <div class="col-md-9">
+              {{endDate}}
+            </div>
+          </div>
+  
+  
+  
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold">Description :</label>
+            </div>
+            <div class="col-md-9">
+                <label [innerHTML]="responsedata.description" class="text-break"></label>
+             
+  
+            </div>
+          </div>
+  
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              &nbsp;
+            </div>
+            <div class="col-md-9  mb-5">
+              <button class="btn mr-3 btn-green text-white"
+                [routerLink]="['/theme/modules/brand-advertisement/edit-advertisement',responsedata?._id]">Edit</button>
+             
+              <button  *ngIf="responsedata.status!=2" class="btn mr-3 btn-success" (click)="modalopen(acceptrequest)">Accept</button>
+              <button  *ngIf="responsedata.status!=3"class="btn mr-3 btn-orange" (click)="modalopen(rejectrequest)" >Reject</button>
+              <button class="btn btn-danger" (click)="modalopen(deleterequest)">Delete</button>
+            </div>
+          </div>
+  
+        </div>
+        <div class="col-md-3">
+            <div class="card border-0">
+              <img class="card-img-top" bind-src="responsedata.imageUrl?responsedata.imageUrl:'assets\images\product-placeholder.jpg'" alt="Card image cap">
+            </div>
+            <div class="text-center">
+              <!-- <label class="text-info btn-default btn-file">Change/Update <br> Image
+                  <input type="file" class="d-none">
+                </label> -->
+            </div>
+          </div>
+  
+      </div>
+    </div>
+  </section>
+  
+  <!-- #accept req  popup start -->
+  <ng-template #acceptrequest let-modal>
+       <section id="modal-header">
+      <div class="container-fluid">
+        <div class="row p-4">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="text-center"> Are you sure want to Accept this Ad/Requset ? </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <section>
+      <div class="container-fluid frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-green" (click)="acceptreq()">Yes</button>
+            <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  
+  <!-- #accept req  popup end -->
+   
+ <!-- reje --------------------------------------------------------------->
+ <ng-template #rejectrequest let-modal>
+    <section id="modal-header">
+   <div class="container-fluid">
+     <div class="row p-4">
+       <div class="col-md-12 frgtpass-head">
+         <h4 class="text-center"> Are you sure want to Reject this Ad/Requset ? </h4>
+       </div>
+     </div>
+   </div>
+ </section>
+
+ <section>
+   <div class="container-fluid frgtpass-btns mb-3">
+     <div class="row mt-3">
+       <div class="col-md-12 text-center">
+         <button type="button" class="btn btn-green" (click)="rejectreq()">Yes</button>
+         <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+         </button>
+       </div>
+     </div>
+   </div>
+ </section>
+</ng-template>
+  <!--  End reject requset popup  -->
+
+  <!-- deletee --------------------------------------------------------------->
+ <ng-template #deleterequest let-modal>
+    <section id="modal-header">
+   <div class="container-fluid">
+     <div class="row p-4">
+       <div class="col-md-12 frgtpass-head">
+         <h4 class="text-center"> Are you sure want to Remove this Ad/Requset ?  </h4>
+       </div>
+     </div>
+   </div>
+ </section>
+
+ <section>
+   <div class="container-fluid frgtpass-btns mb-3">
+     <div class="row mt-3">
+       <div class="col-md-12 text-center">
+         <button type="button" class="btn btn-green" (click)="deletereq()">Yes</button>
+         <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+         </button>
+       </div>
+     </div>
+   </div>
+ </section>
+</ng-template>
+  <!--  End reject requset popup  -->

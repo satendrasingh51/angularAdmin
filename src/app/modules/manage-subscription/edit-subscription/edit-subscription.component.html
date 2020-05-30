@@ -1,0 +1,123 @@
+<section>
+  <div class="container-fluid my-auto">
+    <div class="row align-items-center">
+      <div class="col-md-12">
+        <h4> Manage Subscription</h4>
+      </div>
+    </div>
+    <hr class="hr-border mt-0 pt-0">
+    <div class="row">
+      <div class="col">
+        <div class="custom-breadcrumb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/theme/modules/subscription">Manage Subscription</a></li>
+              <li class="breadcrumb-item"><a [routerLink]="['/theme/modules/subscription/view',subscription_id]">View</a></li>
+              <li class="breadcrumb-item active">Edit</li>
+            </ol>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<h5  *ngIf="update_msg" class="position-fixed push-top alert alert-success  m-0"> Subscription Updated Successfully.</h5>
+
+<section>
+  <div class="container-fluid">
+     <form [formGroup]="subscriptionform" (ngSubmit)="onSubmit()">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group row pt-2">
+          <label class="col-sm-2 text-right font-weight-bold">Title :</label>
+          <div class="col-sm-8">
+            <div class="md-form mt-0">
+              <input class="form-control" type="text" placeholder="title" value="gold" formControlName="title" maxlength="70">
+            </div>
+            <div *ngIf=" submitted &&f.title.errors" class="error-text text-danger">
+                <div *ngIf="f.title.errors.required">Title is required .</div>
+                
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group row pt-2">
+          <label class="col-sm-2 text-right font-weight-bold">Price :</label>
+          <div class="col-sm-8">
+            <div class="md-form mt-0">
+              <input class="form-control" type="text" placeholder="price" value="$500" formControlName="price" maxlength="10" 
+                [readonly]="true">
+            </div>
+            <div *ngIf=" submitted &&f.price.errors" class="error-text text-danger">
+                <div *ngIf="f.price.errors.required">Price is required.</div>
+                
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group row pt-2">
+          <label class="col-sm-2 text-right font-weight-bold">Description :</label>
+          <div class="col-sm-8">
+            <div class="md-form mt-0">
+              <textarea class="form-control" maxlength="400" placeholder="description" rows="3"
+                type="text"  formControlName="description"  maxlength="300"></textarea>
+            </div>
+            <div *ngIf=" submitted &&f.description.errors" class="error-text text-danger">
+                <div *ngIf="f.description.errors.required">Description is required.</div>
+                
+              </div>
+          </div>
+        </div>
+
+        <div class="form-group row pt-2">
+          <label class="col-sm-2 text-right font-weight-bold">Privilages :</label>
+          <div class="col-sm-8">
+            <div class="md-form mt-0">
+              <textarea class="form-control" maxlength="400" placeholder="Privilages" rows="3"
+                type="text"  formControlName="Privilages"> </textarea>
+            </div>
+            <div *ngIf=" submitted &&f.Privilages.errors" class="error-text text-danger">
+                <div *ngIf="f.Privilages.errors.required">Privilages are required.</div>
+                
+              </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="col-md-12 mt-3 d-flex justify-content-center">
+        <button class="btn btn-green mr-3" type="submit">Save</button>
+        <button class="btn btn-danger" type="button" (click)="backClicked()">Cancel</button>
+      </div>
+    </div>
+    </form>
+  </div>
+</section>
+
+<!--modal for save confirmation starts here-->
+<ng-template #contentsave let-modal>
+  <!----- Header  ------>
+  <section id="modal-header">
+    <div class="container-fluid">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to make changes in this Subscription? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-------------->
+  <section>
+    <div class="container-fluid frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-green" (click)="modal.close('Close click')">Yes</button>
+          <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!--modal end here-->

@@ -1,0 +1,184 @@
+<section id="user-details">
+    <div class="container-fluid dis-dashboard">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="custom-breadcrumb">
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a routerLink="/theme/modules/user-management/managenbm-users">Manage  User</a></li>
+                <li class="breadcrumb-item active">View</li>
+              </ol>
+            </nav>
+          </div>
+          <!--  -->
+          <h4 class="mb-0"> {{'User Details'}}</h4>
+          <div *ngIf="manager_block_msg" class="position-fixed push-top alert alert-danger">
+            <h5 class="mb-0">User blocked Successfully.</h5>
+          </div>
+          <div *ngIf="unblock_msg" class="position-fixed push-top alert alert-success">
+            <h5>User Active Successfully.</h5>
+          </div>
+          <div *ngIf="delte_msg" class="position-fixed push-top alert alert-danger">
+            <h5 class="mb-0">User deleted Successfully.</h5>
+          </div>
+        </div>
+      </div>
+      <hr class="hr_adjust">
+    </div>
+  </section>
+  <section>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-4 pb-3 p-2">
+          <!-- <img class="w-100 pl-3 pr-2" height="340px;" alt="Card image cap" [src]="managerData?.imageUrl?managerData?.imageUrl:'/admin/assets/images/user-profile.png'"> -->
+        </div>
+        <div class="col-lg-8">
+          <form>
+            <div class="row text-break">
+              <div class="col-lg-3 pb-5">
+                <label for="name" class="font-weight-bold">NAME</label>
+                <div id="name">{{managerData?.name}}</div>
+              </div>
+              <div class="col-lg-3 pb-5">
+                <label for="email" class="font-weight-bold">Email Address</label>
+                <div id="email">{{managerData?.email}}</div>
+              </div>
+             
+              <div class="col-lg-3 pb-5">
+                <label for="visibility" class="font-weight-bold">Brand</label>
+                <div id="visibility">{{managerData?.brand}}</div>
+              </div>
+              <div class="col-lg-3 pb-5">
+                <label for="jdate" class="font-weight-bold">Joining Date</label>
+                <div id="jdate">{{joning_date}}</div>
+              </div>
+              <div class="col-lg-3 pb-5">
+                <label for="status" class="font-weight-bold">Status</label>
+                <div id="status">{{(managerData?.status==2)?'Blocked':(managerData?.status==1)?'Active':'N/A'}}</div>
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="folowers" class="font-weight-bold">Total Followers</label>
+                <div id="followers">ddddddddd</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="following" class="font-weight-bold">Total Following</label>
+                <div id="following">llllll</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="tviews" class="font-weight-bold">Total Views</label>
+                <div id="tviews">dddddddd</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="tlikes" class="font-weight-bold">Total Likes</label>
+                <div id="tlikes">ddddddddddd</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="nofgrows" class="font-weight-bold">Number of Grows</label>
+                <div id="nofgrows">ddddddddd</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="nofharves" class="font-weight-bold">Number of Harvest</label>
+                <div id="nofharves">jkkkkkkk</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="tcomments" class="font-weight-bold">Total Comments</label>
+                <div id="tcomments">lllllllllll</div> -->
+              </div>
+              <div class="col-lg-3 pb-5">
+                <!-- <label for="tphotos" class="font-weight-bold">Total Photos</label>
+                <div id="tphotos">jjjjjjjjjj</div> -->
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="col-lg-12 pb-5">
+          <div class="row">
+              <div class="col-md-12 text-right">
+                   <!--  *ngIf="(user_detail?.status==2)"  *ngIf="(user_detail?.status==1)"-->
+                
+                    <button *ngIf="(managerData?.status==2)" class="btn btn-green text-white mr-1" type="button" (click)="openVerticallyCentered(content1)">Unblock</button>
+                      <button  *ngIf="(managerData?.status==1)" class="btn btn-danger text-white mr-1" type="button" (click)="openVerticallyCentered(content)">Block</button>
+                      <button class="btn btn-danger mr-1" type="button" (click)="openVerticallyCentered(delete)">Delete</button>
+  
+                </div>
+          </div>
+         
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <ng-template #content let-modal>
+    <!----- Header  ------>
+    <section id="modal-header">
+      <div class="container-fluid">
+        <div class="row p-4">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="text-center"> Are you sure want to Block this User? </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-------------->
+    <section>
+      <div class="container-fluid frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button btn-danger" class="btn btn-danger" (click)="managerBlock()">Block</button>
+            <button type="button  btn-orange" class="ml-3 btn  btn-green text-white" (click)="modal.close('Close click')">Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  
+  <ng-template #content1 let-modal>
+    <!----- Header  ------>
+    <section id="modal-header">
+      <div class="container-fluid">
+        <div class="row p-4">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="text-center"> Are you sure want to Unblock this User? </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-------------->
+    <section>
+      <div class="container-fluid frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn btn-info" (click)="unblockmanagaer()">Unblock</button>
+            <button type="button" class="ml-3 btn btn-green text-white" (click)="modal.close('Close click')">Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  
+  <ng-template #delete let-modal>
+    <!----- Header  ------>
+    <section id="modal-header">
+      <div class="container-fluid">
+        <div class="row p-4">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="text-center"> Are you sure want to Delete this User? </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-------------->
+    <section>
+      <div class="container-fluid frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn  btn-danger" (click)="managerdelete()">Delete</button>
+            <button type="button" class="ml-3 btn btn-green text-white" (click)="modal.close('Close click')">Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </ng-template>

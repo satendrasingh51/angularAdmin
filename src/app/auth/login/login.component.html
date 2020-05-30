@@ -1,0 +1,124 @@
+
+<section id="login-form" class="banner-img">
+  <div class="container-fluid p-5">
+    <div class="row ">
+      <div class="col-md-12 mt-4 p-5">
+        <div class="row">
+          <div class="col-md-4 mb-5 mx-auto">
+            <!-- form card login -->
+            <div class="card mt-2">
+              <div class="card-header text-center">
+                <img src="assets/images/grodoc-logo.svg" />
+              </div>
+              <span class="text-danger text-center pt-3"> {{invalidcredentials_msg}}</span>
+              <div class="card-body mb-3">
+                <form class="  form" [formGroup]="loginForm" (ngSubmit)="onSubmit()" role="form" autocomplete="off" id="formLogin"
+                  novalidate="">
+                  <div class="form-group">
+                    <label for="uname1">Email</label>
+                    <input type="text" class="form-control" formControlName="email" name="uname1" id="uname1" maxlength="50" (keydown)="keyDownHandler($event)">
+
+                    <div *ngIf="submitted && f.email.errors" class="error-text text-danger">
+                      <small *ngIf="f.email.errors.required">Email is required.
+                      </small>
+                      <small *ngIf="f.email.errors.pattern">
+                        Please enter a valid email address.
+                      </small>
+                      <small *ngIf="f.email.errors.maxlength">
+                        Email maximum limit is 50 characters
+                      </small>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="mt-2">Password</label>
+                    <input type="password" class="form-control" formControlName="password" id="pwd1" required
+                      autocomplete="new-password" maxlength="20" (keydown)="keyDownHandler($event)">
+                    <!-- <div class="invalid-feedback">Enter your password too!</div> -->
+                    <div *ngIf="submitted && f.password.errors" class="error-text text-danger">
+                      <small *ngIf="f.password.errors.required">Password is required.</small>
+                      <small *ngIf="f.password.errors.minlength">Password Minimum length 6 chanracters.</small>
+                      <small *ngIf="f.password.errors.maxlength">Password Maximum length is 20 chanracters.</small>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="customCheck1" formControlName='remember'
+                        [checked]="rem">
+                      <label class="custom-control-label" for="customCheck1">Remember me</label>
+                      <a class="pull-right" (click)="openVerticallyCentered(content)" href="javascript:void(0)">{{'Forgot
+                        Password ?'}}</a>
+                    </div>
+                    <div class="pull-right">
+                    </div>
+                  </div>
+                  <div class="form-group mt-3">
+                  
+                    <button type="submit" class=" form-control btn disc-btn w-100 mt-2 btn-green" id="btnLogin">
+                        <i class="fa fa-spinner fa-spin"*ngIf="loading" ></i><span class="pl-2">Login</span></button>
+                  </div>
+                </form>
+              </div>
+              <!--/card-block-->
+            </div>
+          
+          </div>
+        </div>
+        <!--/row-->
+      </div>
+      <!--/col-->
+    </div>
+    <!--/row-->
+  </div>
+  <!--/container-->
+</section>
+
+
+
+
+<!-- *forgot password -->
+<ng-template #content let-modal>
+  <!----- Header  ------>
+  <form [formGroup]="forgetPass" id="forgot_password" method="POST" novalidate="novalidate">
+    <section id="modal-header">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12 frgtpass-head">
+            <h4 class="mx-auto text-center"> {{'FORGOT PASSWORD '}} </h4>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="forgot-pass-modal">
+      <div class="container">
+        <div class="body">
+          <div class="text-center mb-2">
+            <label>Enter your email address below to receive Reset Password link.</label>
+          </div>
+          <div class="form-line d-inline">
+            <i class="fa fa-envelope mr-2"></i>
+            <input type="email" class="form-control d-inline" formControlName="email" name="email" placeholder="Email"
+                autofocus="" aria-required="true"
+              #inputvalue>
+                <div *ngIf="submited && p.email.errors" >
+                  <div *ngIf="p.email.errors.required"><span  class="error-text text-danger ml-4 mt-3">Email is required</span></div>
+                  <div *ngIf="p.email.errors.pattern"><span class="error-text text-danger ml-4 mt-3">Please Enter a valid Email.</span></div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container frgtpass-btns mb-3">
+        <div class="row mt-3">
+          <div class="col-md-12 text-center">
+            <button type="button" class="btn bg-info text-white" (click)="popup_close(inputvalue)">Cancel</button>
+            <button type="submit" class="ml-3 btn btn-success" (click)="forgetPassword()">Send
+              Password</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+</ng-template>

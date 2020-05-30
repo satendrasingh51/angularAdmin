@@ -1,0 +1,194 @@
+<section>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <h4 class="mb-0"> {{'Dashboard'}}</h4>
+            </div>
+        </div>
+        <hr class="hr-border" />
+    </div>
+</section>
+<section>
+    <div class="container-fluid">
+        <form [formGroup]="dashbaordForm" (ngSubmit)="onSubmit()">
+     
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group mt-2 form-inline">
+                        <label class="pull-left mr-2" for="datepicker">From </label>
+                        <input class="form-control input-adjust" placeholder="DD/MM/YYYY" ngbDatepicker #d="ngbDatepicker"
+                            (click)="d.toggle()" [readonly]="true" formControlName="from_date" [maxDate]="maxDate1"(ngModelChange)="fromDate($event)"[maxDate]="maxDate1">
+
+                        <label class="pull-left ml-2 mr-2" for="datepicker">To</label>
+                        <input class="form-control input-adjust" placeholder="DD/MM/YYYY" ngbDatepicker #d1="ngbDatepicker"
+                            (click)="d1.toggle()" [readonly]="true"formControlName="to_date"  [minDate]="minDate1"[maxDate]="maxDate"
+                    (ngModelChange)="toDate1($event)">
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-green mr-4 "> Filter</button>
+                        <button type="button" class="btn btn-danger" (click)="reset()" > Reset</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+<!----- Section 2  ----->
+<section id="inner-content">
+    <div class="container-fluid">
+        <div class="row mt-4 card-adjust text-center text-white">
+            <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient1 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-users"></i>
+                        <h6> Total Users</h6>
+                        <h6>{{dashboard_data?.userCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient3 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-product-hunt"></i>
+                        <h6>Total Products</h6>
+                        <h6>{{dashboard_data?.productCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient3 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-file-text"></i>
+                        <h6>Total NewsLetter Sign-ups</h6>
+                        <h6>{{dashboard_data?.newsLetterCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-bold"></i>
+                        <h6>Total Blogs</h6>
+                        <h6>{{dashboard_data?.blogCount}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient4 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-users"></i>
+                        <h6>Total Subscribers</h6>
+                        <h6>{{dashboard_data?.subscriberCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient3 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-users"></i>
+                        <h6>Total Active Users</h6>
+                        <h6>{{dashboard_data?.unblockCount}}</h6>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient1 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-close"></i>
+                        <h6>Total Blocked Users</h6>
+                        <h6>{{dashboard_data?.blockCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient4 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-contao"></i>
+                        <h6>Total Contact Requests</h6>
+                        <h6>{{dashboard_data?.contactCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-buysellads"></i>
+                        <h6> Total Advertisements</h6>
+                        <h6>{{dashboard_data?.newsLetterCount}}</h6>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient3 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-trophy"></i>
+                        <h6>Featured Packages</h6>
+                        <h6>{{dashboard_data?.featuredCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-users"></i>
+                        <h6>Premium Packages</h6>
+                        <h6>{{dashboard_data?.premiumCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-user-o"></i>
+                        <h6>Verified Customers</h6>
+                        <h6>{{dashboard_data?.verifiedCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-user-times"></i>
+                        <h6>Non-Verified Customers</h6>
+                        <h6>{{dashboard_data?.notVerifiedCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                        <i class="ml-2 mb-2 fa fa-user-circle"></i>
+                        <h6>Public Account customers</h6>
+                        <h6>{{dashboard_data?.publicCount}}</h6>
+                    </div>
+                </div>
+            </div>
+            <div class=" col-md-3 col-lg-3 col-sm-6 col-xs-12 pb-5">
+                <div class="card gradient2 d-flex justify-content-center p-5">
+                    <div class="card-content">
+                            <i class="fa fa-user-secret ml-2 mb-2"></i>
+                        <h6>Private account customers</h6>
+                        <h6>{{dashboard_data?.privateCount}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!----- Section 3  ----->
+
+
+<!----- Section 4 ------>
+
+<!----- Section 5 ------>
+
+<!----------------------------------------section color ------------------------------------------------->

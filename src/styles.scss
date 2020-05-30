@@ -1,0 +1,184 @@
+// common styling
+.push-top {
+  right: 10px;
+  top: 11px;
+  z-index: 999;
+  h4
+  {
+    color: #ffffff;
+  }
+}
+
+html body{
+  background-color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+}
+
+body{
+  font-family: 'Roboto', sans-serif;
+   
+}
+.form-control:focus
+{
+  border-color: #e9ecef !important;
+}
+//scss for common component
+.hr-border {
+  border-top: 2px solid rgba(0, 0, 0, 0.1);
+}
+.h4-size {
+  font-size: 26px;
+ 
+  font-weight: normal;
+}
+.fa{
+  color: #00B420;
+ 
+}
+.fa-trash-o{
+  color: red!important;
+}
+.ngx-pagination .current{
+  background-color: #00B420 !important;
+  color: #ffff;
+}
+.fa-pencil{
+  color: #00B420!important;
+}
+//color code class
+
+
+//color codes  class ends here
+
+
+//scc for profile page
+// #profile-banner{
+//   .banner-img{
+//    background: url(/assets/images/plant-nutrition.jpg) no-repeat center center fixed; 
+//    -webkit-background-size: cover;
+//    -moz-background-size: cover;
+//    -o-background-size: cover;
+//    background-size: cover;
+//   } 
+//   .height-300{
+//      height: 300px;
+//      margin-bottom: 100px;
+//   } 
+//   .profile-image img{
+//       border: 5px solid #FFF;
+//        height: 100px;    
+//    }
+//    .pos{
+//      position: absolute;
+//      bottom: 10px;
+//      right: 0px;
+//     }
+//      .bt-gradient{
+//        background:linear-gradient(135deg, #C56CD6 0%,#3425AF 100%);
+//      } 
+//    .pos2{
+//      position: absolute;
+//      bottom: -30px;
+//     }   
+//  }
+//  #bio-info{
+//    background: #324c57 !important;
+//    .min-w{
+//      label {
+//       min-width: 150px; 
+//       font-size: 14px !important;
+//      }
+//    }   
+//  }
+ .ngx-editor-textarea{
+   min-height:150px!important;
+ }
+
+ .card{border-radius: 0px!important;}
+ .card .card-img-top{border-top-left-radius: 0px; 
+  border-top-right-radius: 0px;
+   border-bottom-left-radius: 0px; 
+   border-bottom-right-radius: 0px;
+  height: 312px; } 
+
+.custom-breadcrumb{ 
+               
+  .breadcrumb{ font-size: 12px; margin-bottom: 15px; padding-bottom: 10px;  background-color: transparent; border:0px;  border-bottom: 2px solid rgba(0, 0, 0, 0.1); border-radius: 0px; padding-top: 0px; padding-left: 0px; 
+  .breadcrumb-item{font-size: 14px;
+                    a{
+                      color: #000000; font-weight: 600;
+                     }
+                  }
+            }
+}
+ 
+//saas for time picker/
+.form-inline.timeinline .form-control{ 
+  width: inherit;
+}
+//common saas for design
+.text-green{
+  color: #00B420;
+}
+.text-orange{
+  color: #FF9500;
+}
+.text-light{
+  color: #929297;
+}
+.btn-orange{
+  background-color: #FF9500!important;
+  color: #ffff!important;
+  min-width: 100px!important;
+}
+.btn-danger{
+  min-width: 100px!important;
+}
+.btn-success{
+  min-width: 100px!important;
+}
+.btn-green{
+  background-color: #00B420!important;
+  color:#fff!important;
+  min-width: 100px!important;
+}
+.input-adjust{
+  font-size: 11px!important;
+  max-width: 6.6rem;
+}
+.newsletter-tabs .nav-tabs .nav-link{ min-width: 200px; text-align: center; color: #495057;}
+.newsletter-tabs .nav-tabs .nav-link.active{ color: #00B420;}
+
+.card.justify-content-center {
+  background: transparent !important;
+  color: #00B420 ;
+}
+.editor-overflow{
+  overflow: hidden;
+}
+.card.justify-content-center h6{ color: #333333;}
+
+.custom-control-input:checked~.custom-control-label::before{    border-color: #00B420!important;
+  background-color: #00B420!important;}
+
+
+  // filter 
+ 
+// button{
+//   min-width: 130px!important;
+// }
+.card-upload-image{
+    height: 315px;
+    text-align: center;
+    background-color: #fafafa;
+    img{
+        height: 100%;
+        max-width: 100%;
+    }
+}
+
+  .sk-ball-spin-clockwise{color: #00B420!important;}
+
+  .input-adjust {
+    font-size: 12px!important;
+    max-width: 5.5rem;}

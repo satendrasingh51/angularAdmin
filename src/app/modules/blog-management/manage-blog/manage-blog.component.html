@@ -1,0 +1,169 @@
+<section id="Blog-details" class="">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4> Manage Blogs</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+<div >
+  <!--  -->
+  <h5 *ngIf="deletedmessage" class="position-fixed push-top alert alert-danger  m-0">Blog Deleted successfully.</h5>
+  <h5  class="position-fixed push-top alert alert-danger  m-0" *ngIf="datevalid_msg">Please fill Published Date or Last Update Date in calendars.</h5>
+</div>
+
+<section id="inner">
+  <div class="container-fluid">
+    <div class="row pb-3">
+      <div class="col-md-4 mt-2 form-group d-inline">
+        <div class="search-driver input-group">
+          <input type="text" class="form-control pl-2" placeholder="Search..." (input)="searchstring($event.target.value)"
+            maxlength="100">
+          
+        </div>
+      </div>
+      <div class="col-md-8 mt-2 col-sm-12">
+        <div class="pull-right">
+          <button type="button" routerLink="/theme/modules/blog-management/add-blogs" routerLinkActive='active' class="ml-2 btn btn btn-green">Add
+            New Blogs</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="row" id="filter">
+        <div class="col-md-3">
+          <label for="adding date">
+            <h6>Published Date:</h6>
+          </label>
+          <div class="form-group mt-2 form-inline">
+            <label class="pull-left mr-2" for="datepicker">From </label>
+            <input class="input-adjust form-control date-pkr" (click)="d2.toggle()" placeholder="DD/MM/YYYY" name="dp2"
+              ngbDatepicker #d2="ngbDatepicker" [startDate]="maxDate" formControlName="from_time_first" [readonly]="true" [maxDate]="maxDate"
+              (ngModelChange)="fromDate($event)">              
+            <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+            <input class="input-adjust form-control date-pkr" (click)="open == 1 ? d3.toggle():null" placeholder="DD/MM/YYYY"
+              name="dp3" ngbDatepicker #d3="ngbDatepicker" formControlName="to_time_first" [readonly]="true" [minDate]="minDate1"
+              [maxDate]="maxDate3" (ngModelChange)="toDate($event)">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="last-update">
+            <h6>Last Update Date:</h6>
+          </label>
+          <div class="form-group mt-2 form-inline">
+            <label class="pull-left mr-2" for="datepicker">From </label>
+            <input class="input-adjust form-control date-pkr" (click)="d4.toggle()" placeholder="DD/MM/YYYY" name="dp5"
+              ngbDatepicker #d4="ngbDatepicker" formControlName="from_time_second" [readonly]="true" [maxDate]="maxDate1"
+              (ngModelChange)="fromDate1($event)">
+            <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+            <input class="input-adjust form-control date-pkr" (click)="open1 == 1 ? d5.toggle():null" placeholder="DD/MM/YYYY"
+              name="dp6" ngbDatepicker #d5="ngbDatepicker" formControlName="to_time_second" [readonly]="true" [minDate]="minDate2"
+              [maxDate]="maxDate3" (ngModelChange)="toDate1($event)">
+          </div>
+        </div>
+        <div class="col-md-3">
+            <label for="last-update">
+                <h6>Category:</h6>
+            </label>
+            <div class="form-group mt-2 form-inline">
+                <select class="form-control" formControlName="category"> 
+                    <option value="">All</option>
+                    <option *ngFor="let category of categorylists" value="{{category?._id}}">{{category.category}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-3 mt-4">
+          <div class="text-right mt-3">
+            <button class="btn btn-orange" type="submit">Filter</button>
+            <button class="btn btn-danger ml-2" type="button" (click)="reset()" >Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section id="data-table">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-text">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead class="btn-green">
+                  <tr>
+                    <!-- <th scope="col">Sr. No.</th> -->
+                    <th scope="col" sortable="name" >Sr.No.</th>
+                    <th scope="col" sortable="area"  class="titile-max-width text-break">Blog
+                      Title</th>
+                    <th scope="col" sortable="area" >Category</th>
+                    <th scope="col" sortable="population" >Published Date</th>
+                    <th scope="col" sortable="name">Last Update date</th>
+                    <th scope="col" sortable="population" > Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of rersponsedispaly | paginate: {itemsPerPage: limit, currentPage: page, totalItems: collectionSize } let i=index">
+                    <td>{{((page-1)*limit)+(i+1)}}</td>
+                    <td class="titile-max-width text-break">{{data.title}}</td>
+                    <td><span *ngFor="let respo of data.categoryData; let i= index ">{{respo.category}}<span *ngIf="data.categoryData.length >1 && i< data.categoryData.length -1">,
+                        </span></span></td>
+                    <td>{{customdate(data.created)}}</td>
+                    <td>{{customdate(data.date)}}</td>
+                    <td><i class="fa mr-2 fa-eye pointer" (click)="details(data._id)"></i>
+                      <a [routerLink]="['/theme/modules/blog-management/edit-blogs',data._id]"> <i class="fa mr-2 fa-pencil"></i>
+                      </a>
+                      <a><i class="fa mr-2 fa-trash-o pointer" (click)="openVerticallyCentered(content,data._id)"></i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <pagination-controls *ngIf="collectionSize !=0 " (pageChange)="loadpage($event)" maxSize="5" directionLinks="true"
+              responsive="true" previousLabel="Previous" nextLabel="Next"></pagination-controls>
+          </div>
+          <div class="col-md-6 text-right">
+            <select class="custom-select" style="width: auto" (change)="limitchange($event)">
+              <option Value=10>10 Blogs per page</option>
+              <option Value=15>15 Blogs per page</option>
+              <option Value=25> 25 Blogs per page</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="collectionSize ===0" class="text-center"><span>No Data found</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal>
+  <section id="modal-header">
+
+    <div class="container">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure  want to delete this Blog? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-green col-md-3 mr-5" (click)="deleteblog()">Yes</button>
+          <button type="button" class="ml-3 btn btn-danger col-md-3 ml-5" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

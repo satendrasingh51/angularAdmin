@@ -1,0 +1,343 @@
+<section id="manage-users">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="mb-0"> {{'Manage Newsletter'}}</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+<div *ngIf="subscriberdeletemsg" class="position-fixed push-top alert alert-danger">
+  <h5 class="mb-0">Subscriber deleted Successfully.</h5>
+</div>
+<div *ngIf="newsletterdeletedmsg" class="position-fixed push-top alert alert-danger">
+  <h5 class="mb-0">Newsletter deleted Successfully.</h5>
+</div>
+
+
+<div class="tabs-outer pb-4">
+  <div class="container-fluid">
+    <ngb-tabset class="newsletter-tabs" justify="center">
+      <ngb-tab>
+        <ng-template ngbTabTitle><span (click)="onChangeTab('1')">Subscriber</span></ng-template>
+        <ng-template ngbTabContent>
+          <section class="pt-4 mt-2" id="inner">
+            <div class="">
+              <div class="row">
+                <div class="col-md-4 form-group d-inline">
+                  <div class="input-group">
+                    <input type="text" class="form-control pl-2 " placeholder="Search..." (input)="serachstring($event)"
+                      maxlength="15">
+                    <div class="input-group-append">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-12 pos">
+                  <div class="pull-right">
+                    <button type="button" class="ml-2 btn btn-green text-white" (click)="exportsubscribers()">Export to
+                      CSV</button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="row"></div>
+            </div>
+          </section>
+          <section id="supplier-inner-section">
+            <div class="">
+              <div class="row">
+                <div class="col-md-12">
+                  <form [formGroup]="subscriberform" (ngSubmit)="searchsubscriber()">
+                    <div class="row">
+
+                      <div class="col-md-5">
+                        <label for="joining date">Subscribed Date</label>
+                        <div class="form-group mt-2 form-inline">
+
+                          <label class="pull-left mr-2" for="datepicker">From </label>
+
+                          <input class="input-adjust form-control pr-0" (click)="d2.toggle()" placeholder="dd-mm-yyyy"
+                            name="dp2" ngbDatepicker #d2="ngbDatepicker" (ngModelChange)="subscription_fromdate($event)"
+                            formControlName="subfromdate" [readonly]="true" [maxDate]="maxDate">
+
+                          <label class="pull-left ml-2 mr-2" for="datepicker">To</label>
+                          <input class="input-adjust form-control pr-0" (click)="d3.toggle()" placeholder="dd-mm-yyyy"
+                            name="dp3" ngbDatepicker #d3="ngbDatepicker" (ngModelChange)="subscription_todate($event)"
+                            formControlName="subtodate" [readonly]="true" [minDate]="minDate1">
+
+                        </div>
+                      </div>
+
+                      <div class="col-md-3">
+                        <!-- <div class="form-group ">
+                        <span for="display">Status</span>
+                        <select id="dislay" name="display" class="mt-3 form-control">
+                          <option>All</option>
+                          <option>Blocked</option>
+                          <option>Unblocked</option>
+                        </select>
+                      </div> -->
+                      </div>
+
+                      <div class="col-md-4 mt-4">
+                        <div class="text-right mt-3">
+                          <button class="btn btn-orange text-white" type="submit">Filter</button>
+                          <button class="btn btn-danger ml-2" type="button"
+                            (click)="resetsubscriberform()">Reset</button>
+                          <!-- <button class="btn btn-success ml-2 " type="button">Send Notifications</button> -->
+                        </div>
+                      </div>
+
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="client-mngmnt">
+            <div class="">
+              <div class="row">
+                <div class="col-12 ">
+                  <div class="card">
+                    <div class="card-text">
+                      <div class="table-responsive">
+                        <table class="table table-hover text-center">
+                          <thead class="btn-green">
+                            <tr>
+                              <th scope="col">Sr. No.</th>
+
+                              <th scope="col">Email</th>
+
+                              <th scope="col"> Subscribed on Date</th>
+                              <!-- <th scope="col" sortable="area" (sort)="onSort($event)">Total Expense</th> -->
+                              <th scope="col">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="let subscriber of subscriberlists | paginate: {itemsPerPage: limit, currentPage: page, totalItems: collectionSize1 } let i=index;">
+                              <td>{{((page-1)*limit)+(i+1)}}</td>
+                              <td>{{ subscriber.email }}</td>
+                              <td>{{ subscriber.created }}</td>
+                              <td><span>
+
+                                  <a href="javascript:void(0);"
+                                    (click)="openVerticallyCentered(deletepopup,subscriber?._id)"><i
+                                      class="fa fa-trash-o text-danger"></i></a> &nbsp;
+                                </span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <pagination-controls *ngIf="collectionSize1 !=0 " (pageChange)="subscriberpagechange($event)"
+                            maxSize="5" directionLinks="true" responsive="true" previousLabel="Previous"
+                            nextLabel="Next">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-6" *ngIf="collectionSize1 !=0 ">
+                          <select class="custom-select pull-right" style="width: auto" (change)="limitchange1($event)">
+                            <option Value=10>10 Requests per page</option>
+                            <option Value=15>15 Requests per page</option>
+                            <option Value=25> 25 Requests per page</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Delete popup start -->
+          <ng-template #deletepopup let-modal>
+            <!----- Header  ------>
+            <section id="modal-header">
+              <div class="container-fluid">
+                <div class="row p-4">
+                  <div class="col-md-12 frgtpass-head">
+                    <h4 class="text-center"> Are you sure want to delete this Subscriber? </h4>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-------------->
+            <section>
+              <div class="container-fluid frgtpass-btns mb-3">
+                <div class="row mt-3">
+                  <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-green" (click)="deletesubscriber()">Yes</button>
+                    <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </ng-template>
+          <!-- Delete popup end -->
+        </ng-template>
+      </ngb-tab>
+      <ngb-tab>
+        <ng-template ngbTabTitle><span (click)="onChangeTab('2')">Newsletter Gallery</span></ng-template>
+        <ng-template ngbTabContent>
+          <section class="pt-4 mt-2" id="inner">
+            <div class="">
+              <div class="row">
+                <div class="col-md-4 form-group d-inline">
+                  <div class="input-group">
+                    <input type="text" class="form-control pl-2 " placeholder="Search..."
+                      (input)="searchnewsletter($event)" maxlength="15">
+                    <div class="input-group-append">
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-8 col-sm-12 pos">
+                  <div class="pull-right">
+                    <button class="btn btn-orange text-white"
+                      routerLink="/theme/modules/newsletter-management/view-gallery">Gallery</button>
+                    <button type="button" class="ml-2 btn btn-green text-white" (click)="newsletterexport()">Export to
+                      CSV</button>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <hr />
+                </div>
+              </div>
+            </div>
+            <div class="">
+              <div class="row"></div>
+            </div>
+          </section>
+          <section id="supplier-inner-section">
+            <div class="">
+              <form [formGroup]="newsletterfilterform">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label for="joining date">Added Date</label>
+                        <div class="form-group mt-2 form-inline">
+                          <label class="pull-left mr-2" for="datepicker">From </label>
+                          <input class="form-control input-adjust pr-0" (click)="d2.toggle()" placeholder="dd-mm-yyyy"
+                            name="dp2" ngbDatepicker #d2="ngbDatepicker" formControlName="newsletter_fromdate"
+                            (ngModelChange)="letter_fromdate($event)" [readonly]="true" [maxDate]="maxDate1">
+                          <!-- <input type="text" id="datepicker"ngbDatepicker  name="datepicker" class="ml-2 form-control" />     -->
+                          <label class="pull-left ml-2 mr-2" for="datepicker">To</label>
+                          <input class="form-control input-adjust pr-0" (click)="d3.toggle()" placeholder="dd-mm-yyyy"
+                            name="dp3" ngbDatepicker #d3="ngbDatepicker" formControlName="newsletter_todate"
+                            (ngModelChange)="letter_todate($event)" [readonly]="true" [minDate]="minDate2">
+                        </div>
+                      </div>
+                      <div class="col-md-6 mt-4">
+                        <div class="text-right mt-3">
+                          <button class="btn  btn-orange text-white" type="button"
+                            (click)="filternewsletter()">Filter</button>
+                          <button class="btn btn-danger ml-2" type="button"
+                            (click)="resetnewsletterform()">Reset</button>
+                          <!-- <button class="btn btn-success ml-2 " type="button">Send Notifications</button> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </section>
+          <section class="client-mngmnt">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-12 ">
+                  <div class="card">
+                    <div class="card-text">
+                      <div class="table-responsive">
+                        <table class="table table-hover">
+                          <thead class="btn-green">
+                            <tr>
+                              <th scope="col">Sr. No.</th>
+                              <th scope="col" sortable="area" (sort)="onSort($event)">Email</th>
+                              <th scope="col" sortable="name" (sort)="onSort($event)"> Added on Date</th>
+                              <th scope="col" sortable="population" (sort)="onSort($event)">Total Uploaded Images</th>
+                              <th scope="col" sortable="population" (sort)="onSort($event)">Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr
+                              *ngFor="let newsletter of newsletterdata | paginate: {itemsPerPage: limit1, currentPage: page1, totalItems: collectionSize2 } let i=index;">
+                              <td>{{((page1-1)*limit1)+(i+1)}}</td>
+                              <td>{{ newsletter.email }}</td>
+                              <td>{{ customdate(newsletter.created)}}</td>
+                              <td><a (click)="newsletterimage(newsletter?.email)"
+                                  href="javascript:void(0);">{{newsletter?.images}}</a></td>
+                              <td><span>
+                                  <a href="javascript:void(0);"
+                                    (click)="openVerticallyCentered(deletepopup2,newsletter._id)"><i
+                                      class="fa fa-trash-o text-danger"></i></a> &nbsp;
+                                </span></td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <div *ngIf="collectionsize2==0" class="text-center"> No Data Found </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <pagination-controls *ngIf="collectionsize2 !=0" (pageChange)="newsletterpagechange($event)"
+                            maxSize="5" directionLinks="true" responsive="true" previousLabel="Previous"
+                            nextLabel="Next">
+                          </pagination-controls>
+                        </div>
+                        <div class="col-md-6" *ngIf="collectionsize2 !=0">
+                          <select class="custom-select pull-right" style="width: auto" (change)="limitchange2($event)">
+                            <option Value=10>10 Requests per page</option>
+                            <option Value=15>15 Requests per page</option>
+                            <option Value=25> 25 Requests per page</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Delete popup start -->
+          <ng-template #deletepopup2 let-modal>
+            <!----- Header  ------>
+            <section id="modal-header">
+              <div class="container-fluid">
+                <div class="row p-4">
+                  <div class="col-md-12 frgtpass-head">
+                    <h4 class="text-center"> Are you sure want to delete this entry? </h4>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-------------->
+            <section>
+              <div class="container-fluid frgtpass-btns mb-3">
+                <div class="row mt-3">
+                  <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-green" (click)="deletenewsletter()">Yes</button>
+                    <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </section>
+          </ng-template>
+          <!-- Delete popup end -->
+
+        </ng-template>
+      </ngb-tab>
+
+    </ngb-tabset>
+
+  </div>
+</div>

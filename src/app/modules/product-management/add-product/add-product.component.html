@@ -1,0 +1,199 @@
+<section id="Add products">
+  <div class="container-fluid dis-dashboard">
+    <div class="custom-breadcrumb">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/theme/modules/product-management/manage-products">Manage
+              Products</a></li>
+          <li class="breadcrumb-item active">Add Product</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h4 class="mb-0"> {{'Add Product'}}</h4>
+      </div>
+
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+<h5 *ngIf="success_msg" class="position-fixed push-top alert alert-success">Product Added Successfully.</h5>
+
+<div *ngIf="error_msg" class="position-fixed push-top alert alert-danger">
+  <h5> Product is not Added please try again.</h5>
+</div>
+<section id="inner-content">
+  <div class="container-fluid">
+    <form [formGroup]="product_form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-4">
+            <h5 class="text-center">Product Logo Image </h5>
+            <div class="card-upload-image border-0">
+              <img [src]="logourl==undefined ? 'https://qualityaircareny.com/wp-content/uploads/2017/03/dummy.jpg' :logourl"
+                alt="Card image cap">
+            </div>
+            <div class="text-center">
+              <label class="text-info btn-default btn-file" style="cursor:pointer">
+                <span> Product Logo Image</span>
+                <input type="file" class="d-none" (change)="logouploadimage($event)">
+              </label>
+            </div>
+          </div>
+
+          <div>
+             <h5 class="text-center">Product Image</h5> 
+          </div>
+
+          <div>
+            <div class="card-upload-image border-0">
+              <img [src]="media==undefined ? 'https://qualityaircareny.com/wp-content/uploads/2017/03/dummy.jpg' :media"
+                alt="Card image cap">
+            </div>
+            <div class="text-center">
+              <label class="text-info btn-default btn-file" style="cursor:pointer">
+                <span> Browse Image</span>
+
+                <input type="file" class="d-none" (change)="onSelectFile($event)">
+                <div *ngIf="img_validation_msg" class="error-text text-danger"> Image is required</div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-8 text-center">
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Name :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" name="" placeholder="Enter Name here..." formControlName="p_name">
+              <div *ngIf=" submitted &&validation.p_name.errors" class="error-text text-danger">
+                <div *ngIf="validation.p_name.errors.required">Product Name is required.</div>
+                <div *ngIf="validation.p_name.errors.maxlength">Product Name is Maximum 50 Character.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Brand :</label>
+            </div>
+            <div class="col-md-9 ">
+              <select class="form-control"  formControlName="brand_name">
+                <option> Select Brand</option>
+              <option *ngFor="let data of  Brandnames" >{{data}}</option>
+              </select>
+              <div *ngIf=" submitted &&validation.brand_name.errors" class="error-text text-danger">
+                <div *ngIf="validation.brand_name.errors.required">Brand Name is required.</div>
+               
+              </div>
+            </div>
+            <!-- <div class="col-md-9">
+              <input class="form-control" type="text" name="" placeholder="Enter Brand here..."
+                formControlName="brand_name">
+              <div *ngIf=" submitted &&validation.brand_name.errors" class="error-text text-danger">
+                <div *ngIf="validation.brand_name.errors.required">Brand Name is required.</div>
+                <div *ngIf="validation.brand_name.errors.maxlength">Brand Name is Maximum 50 Character.</div>
+              </div>
+            </div> -->
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Category :</label>
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" formControlName="category" (change)="onChange($event)"
+                [(ngModel)]="selected_show">
+                <option selected value="">Select</option>
+                <option *ngFor="let cate of dropdownList" value="{{cate._id}}">{{cate.category}}</option>
+              </select>
+              <!-- <ng-multiselect-dropdown 
+                [data]="dropdownList" [(ngModel)]="selectedItems"  [settings]="dropdownSettings"
+                (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onItemDeSelect($event)"
+                (onDeSelectAll)="onDeSelectAll($event)"
+                [ngModelOptions]="{standalone: true}">
+              </ng-multiselect-dropdown> -->
+              <!-- <span *ngFor="let cate of category_name">{{cate.category}}
+                    <span> <input type="checkbox"  value="{{cate._id}}" formControlName="category"
+                      class="pl-2 mr-2" (change)="checkcatvalue($event)"/></span>
+                  </span> -->
+              <div *ngIf="submitted && validation.category.errors" class="error-text text-danger">
+                <div *ngIf="validation.category.errors.required"> Category is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group" *ngIf="sub_cat_dropdown">
+            <div class="col-md-3 ">
+              <label class="font-weight-bold mt-1">Sub Category :</label>
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" (change)="subcategory($event)">
+                <option value="o">Select</option>
+                <option *ngFor="let subcategory of data_sub_cat" value="{{subcategory._id}}">{{subcategory.category}}
+                </option>
+              </select>
+              <div *ngIf="sub_validation_msg"> Sub category is required.</div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Direction :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" name="" placeholder="Enter text here..."
+                formControlName="direction">
+              <div *ngIf="submitted && validation.direction.errors">
+                <div *ngIf="validation.direction.errors.required" class="error-text text-danger"> Direction is
+                  required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Added On :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="publisheddate" ngbDatepicker
+                #d2="ngbDatepicker" [readonly]="true" value="{{current_date |date :'dd/MM/yyyy'}}">
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold mt-1">Description :</label>
+            </div>
+            <div class="col-md-9">
+              <ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true"
+                formControlName="description"></ck-editor>
+
+              <!-- <ck-editor name="editor1" [(ngModel)]="editorValue" skin="moono-lisa" language="en" [fullPage]="true" formControlName="description" ></ck-editor> -->
+
+
+
+              <!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true" ></app-ngx-editor> -->
+              <div *ngIf="submitted && validation.description.errors">
+                <div *ngIf="validation.description.errors.required" class="error-text text-danger"> Description is
+                  required</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 mb-5">
+          <div class="pull-right">
+            <button class="btn mr-4 btn-green " type="submit">Add</button>
+            <button class="btn btn-orange"
+              routerLink="/theme/modules/product-management/manage-products">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </div>
+</section>

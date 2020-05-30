@@ -1,0 +1,172 @@
+<section id="Blog-details">
+  <div class="container-fluid dis-dashboard">
+    <div class="custom-breadcrumb">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#" routerLink="/theme/modules/brand-advertisement">Manage
+              Brand Advertisement</a></li>
+          <li class="breadcrumb-item active">Edit
+            Advertisement</li>
+        </ol>
+      </nav>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <h4 class="mb-0"> {{'Edit Advertisement'}}</h4>
+      </div>
+    </div>
+
+    <hr class="hr-border" />
+  </div>
+
+</section>
+
+<h5 *ngIf="updatesuceessmsg" class="position-fixed push-top alert alert-success"> Ad/Requset Updated Successfully.</h5>
+
+<div>{{message}}</div>
+<section id="inner-content">
+  <div class="container-fluid">
+    <form [formGroup]="editadvertisementform">
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">Brand Name :</label>
+          </div>
+          <div class="col-md-9">
+            <input class="form-control" type="text" name="" placeholder="ABC" formControlName="brand">
+            <div *ngIf="Submitted && f.brand.errors" class="error-text text-danger">
+                <div *ngIf="f.brand.errors.required">Brand Name is required
+                </div>
+                <div *ngIf="f.brand.errors.maxlength">Brand Name Maximum limit is 40 characters
+                </div>
+            </div>
+          </div>
+
+
+
+
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">Title :</label>
+          </div>
+          <div class="col-md-9">
+            <input class="form-control" type="text" name="" placeholder=""  formControlName="title">
+            <div *ngIf="Submitted && f.title.errors" class="error-text text-danger">
+                <div *ngIf="f.title.errors.required">Title  is required
+                </div>
+                <div *ngIf="f.title.errors.maxlength">Title Maximum limit is 40 characters
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">URL/Link :</label>
+          </div>
+          <div class="col-md-9">
+            <input class="form-control" type="url"   placeholder="https://example.com"formControlName="urlLink">
+            <div *ngIf="Submitted && f.urlLink.errors" class="error-text text-danger">
+                <div *ngIf="f.urlLink.errors.required">urlLink  is required.
+                </div>
+                <div *ngIf="f.urlLink.errors.pattern">Please fill correct urlLink.
+                  </div>
+                
+              
+            </div>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">Start Date :</label>
+          </div>
+          <div class="col-md-9">
+            <input class="form-control" (click)="d1.toggle()" placeholder="dd/mm/yyyy" name="publisheddate"
+              ngbDatepicker #d1="ngbDatepicker" formControlName="startDate" (ngModelChange)="startdatevalidation($event)" 
+              [maxDate]="minDate" [readonly]="true"  [minDate]="currentdate">
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">End Date :</label>
+          </div>
+          <div class="col-md-9">
+            <input class="form-control" (click)="d2.toggle()" placeholder="dd/mm/yyyy" name="publisheddate"
+              ngbDatepicker #d2="ngbDatepicker" formControlName="endDate" (ngModelChange)="enddatevalidation($event)"
+                [minDate]="maxDate"  [readonly]="true">
+          </div>
+        </div>
+
+
+
+        <div class="row form-group">
+          <div class="col-md-3 text-right">
+            <label class="font-weight-bold mt-1">Description :</label>
+          </div>
+          <div class="col-md-9">
+            <!-- <app-ngx-editor [placeholder]="'Enter text here...'" [spellcheck]="true"></app-ngx-editor> -->
+            <ck-editor skin="moono-lisa" language="en" [fullPage]="true" formControlName="description"></ck-editor>
+            <div *ngIf="Submitted && f.description.errors" class="error-text text-danger">
+                <div *ngIf="f.description.errors.required">Description  is required.
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+
+        <div class="card border-0">
+          <img class="card-img-top" bind-src="imageurl?imageurl:'assets\images\product-placeholder.jpg'" alt="Card image cap">
+        </div>
+        <div class="text-center">
+          <label class="text-info btn-default btn-file">Change/Update <br> Image
+            <input type="file" class="d-none" (change)="selectfile($event)">
+          </label>
+          <div *ngIf="imagevalidationmsg" class="error-text text-danger">Image is required</div>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-8 mb-5">
+        <div class="">
+          <button class="btn mr-4 btn-green text-white" (click)="formdatasave()">Save</button>
+          <button class="btn btn-orange" (click)="redirectback()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  </div>
+
+</section>
+
+
+<ng-template #contentsave let-modal>
+  <!----- Header  ------>
+  <section id="modal-header">
+    <div class="container-fluid">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to make changes in this Product? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-------------->
+  <section>
+    <div class="container-fluid frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-green" routerLink="/theme/modules/product-management/manage-products"
+            (click)="modal.close('Close click')">Yes</button>
+          <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

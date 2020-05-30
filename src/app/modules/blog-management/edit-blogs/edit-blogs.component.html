@@ -1,0 +1,157 @@
+<section id="Blog-details">
+  <div class="container-fluid dis-dashboard">
+    <div class="row">
+      <div class="col-md-12">
+        <nav aria-label="breadcrumb h-10">
+          <ol class="bg-white breadcrumb">
+            <li class="breadcrumb-item"><a routerLink="/theme/modules/blog-management/blog-manage">Manage Blogs</a></li>
+            <li class="breadcrumb-item inactive">Edit Blogs</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-lg-12 col-md-12 col-sm-12">
+        <h4> {{'Blog Details'}}</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+<h5 *ngIf="response_meesage" class="position-fixed push-top alert alert-success">Blog Updated Successfully</h5>
+
+<!-- <div  class="successfull-overlay">
+  <span class="text-info">  </span>
+</div> -->
+<div><span class="text-danger">{{message}}</span></div>
+<section id="inner-content">
+  <div class="container-fluid">
+    <form [formGroup]="EditblogForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="spinner-border text-light" role="status" *ngIf="loader">
+            <span class="sr-only">Loading...</span>
+          </div>
+          <div class="card-upload-image">
+            <img class="" [src]="media ===undefined?'https://qualityaircareny.com/wp-content/uploads/2017/03/dummy.jpg':media"
+              alt="Card image cap" (click)="fileInput.click()">
+          </div>
+          <div class="text-center">
+            <label class="text-info btn-default btn-file curs_point">Change Image
+              <input type="file" class="d-none" (change)="onSelectFile($event)" #fileInput accept="image/*">
+            </label>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="title">Title:</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" formControlName="title" [value]="blog_data?.title" maxlength="100">
+              <div *ngIf=" submitted &&f.title.errors" class="error-text text-danger">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+                <div *ngIf="f.title.errors.maxlength">Title Maximum limit is 100 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="caption">Caption</label>
+            </div>
+            <div class="col-md-9">
+              <input type="text" class="form-control" [placeholder]="'Enter text here...'" formControlName="caption"
+                value="{{blog_data?.caption}}" maxlength="50">
+              <div *ngIf="submitted && f.caption.errors" class="error-text text-danger">
+                <div *ngIf="f.caption.errors.required">Caption is required
+                </div>
+                <div *ngIf="f.caption.errors.maxlength">Caption Maximum limit is 50 characters
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="Quickdescription">Quick Description:</label>
+            </div>
+            <div class="col-md-9">
+              <textarea class="form-control" [placeholder]="'Enter text here...'" value="{{blog_data?.description}}"
+                rows="4" style="resize:none" formControlName="description"  maxlength="300"></textarea>
+              <div *ngIf="submitted && f.description.errors" class="error-text text-danger">
+                <div *ngIf="f.description.errors.required">Description is required
+                </div>
+                <div *ngIf="f.description.errors.maxlength">Description Maximum limit is 500 characters
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="category">Category:</label>
+            </div>
+            <div class="col-md-9">
+
+              <span *ngFor="let categorydisplay of category_list"> {{categorydisplay.category}}<span>&nbsp;
+                  <input type="checkbox" [checked]="categorydisplay.isChecked===true" [value]="categorydisplay.isChecked"
+                    (change)="checkcatvalue(categorydisplay)" />
+                </span></span>
+              <div *ngIf=" submitted &&f.category.errors" class="error-text text-danger">
+                <div *ngIf="f.category.errors.required">Please Select category.</div>
+
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="publisheddate">Published date:</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control date-pkr" ngbDatepicker #d1="ngbDatepicker" [formControlName]="" readonly
+                value="{{showpublished_date}}">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold" for="publisheddate">Last Update:</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control  date-pkr" ngbDatepicker #d1="ngbDatepicker" [formControlName]="" readonly
+                value="{{updated_date}}">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3">
+              <label class="font-weight-bold">Details:</label>
+            </div>
+            <div class="col-md-9">
+              <!-- <ckeditor [editor]="Editor" [(ngModel)]="editorData" name="editor1" class="w-100" style="height:auto;"
+                language="en" formControlName="details">
+              </ckeditor> -->
+              <ck-editor formControlName="details" [(ngModel)]="editorData" skin="moono-lisa" language="en" [fullPage]="true"></ck-editor>
+              <div *ngIf=" submitted &&f.details.errors" class="error-text text-danger">
+                <div *ngIf="f.details.errors.required">Details is required.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  <div class="col-md-12 mb-5">
+            <div class="pull-right">
+              <button type="button" class="btn mr-4 btn-success" (click)="backClicked()">Back</button>
+             <button class="btn bg-info text-white" (click)="backClicked()">Cancel</button> -->
+        <!-- </div>
+          </div>   -->
+        <div class="col-md-12 mb-5">
+          <div class="pull-right">
+            <button type="submit" class="btn btn-green mr-4 btn-success">Update</button>
+            <button class="btn btn-orange" (click)="backClicked()">Cancel</button>
+          </div>
+        </div>
+
+      </div>
+    </form>
+  </div>
+
+</section>

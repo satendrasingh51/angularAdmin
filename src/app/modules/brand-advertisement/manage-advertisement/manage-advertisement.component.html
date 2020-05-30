@@ -1,0 +1,180 @@
+<section id="Blog-details" class="">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4> Manage Brand Advertisement</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+
+<h5 *ngIf="deletemsg" class="position-fixed push-top alert alert-danger"> Ad/Requset deleted Successfully.</h5>
+
+<section id="inner">
+  <div class="container-fluid">
+    <div class="row pb-3">
+      <div class="col-md-4 mt-2 form-group d-inline">
+        <div class="search-driver input-group">
+          <input type="text" class="form-control pl-2 " placeholder="Search..." (input)="serachstring($event)"
+            maxlength="15"> 
+        </div>
+      </div>
+      <div class="col-md-8 mt-2 col-sm-12">
+        <div class="pull-right">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <form [formGroup]="searchform" (ngSubmit)="filter()">
+      <div class="row" id="filter">
+        <div class="col-md-3">
+          <label for="adding date">
+            <h6>Start Date</h6>
+          </label>
+          <div class="form-group mt-2 form-inline">
+            <label class="pull-left mr-2" for="datepicker">From </label>
+            <input class="input-adjust form-control" (click)="d2.toggle()" placeholder="dd/mm/yyyy" name="dp2"
+              ngbDatepicker #d2="ngbDatepicker" [readonly]="true" formControlName="fromstratdate"
+              (ngModelChange)="fromstartDate($event)" [maxDate]="maxDate">
+
+            <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+            <input class="input-adjust form-control" (click)="d3.toggle()" placeholder="dd/mm/yyyy" name="dp3"
+              ngbDatepicker #d3="ngbDatepicker" [readonly]="true" formControlName="fromenddate"
+              (ngModelChange)="fromendDate($event)" [minDate]="minDate">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="last-update">
+            <h6>End Date</h6>
+          </label>
+          <div class="form-group mt-2 form-inline">
+            <label class="pull-left mr-2" for="datepicker">From </label>
+            <input class="input-adjust form-control" (click)="d4.toggle()" placeholder="dd/mm/yyyy" name="dp5"
+              ngbDatepicker #d4="ngbDatepicker" [readonly]="true" formControlName="tostratdate"
+              (ngModelChange)="tostartDate($event)" [maxDate]="maxDate1">
+
+            <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+            <input class="input-adjust form-control" (click)="d5.toggle()" placeholder="dd/mm/yyyy" name="dp6"
+              ngbDatepicker #d5="ngbDatepicker" [readonly]="true" formControlName="toenddate"
+              (ngModelChange)="toendDate($event)" [minDate]="minDate1">
+          </div>
+
+        </div>
+        <div class="col-md-3 ml-auto">
+            <label for="last-update"><h6>Status</h6></label>
+          <select  class="form-group mt-2  form-control" formControlName="status">
+              <option class=" form-control" value="0">All</option>
+              <option class=" form-control" value="1">Pending</option>
+              <option  class="form-control" value="2">Accepted</option>
+              <option  class="form-control" value="3">Rejected</option>
+          </select>
+        </div>
+        <div class="col-md-3 my-auto">
+          <div class="d-flex justify-content-end mt-4">
+
+            <button class="btn btn-green mr-3" type="submit">Filter</button>
+            <button class="btn btn-danger" type="button" (click)="resetfilter()">Reset</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+</section>
+<section id="data-table">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-text">
+            <div class="table-responsive">
+              <table class="table table-hover text-center">
+                <thead class="btn-green">
+                  <tr>
+                    <th scope="col">Sr. No.</th>
+                    <th scope="col" sortable="name">Brand Name</th>
+                    <th scope="col" sortable="area">Title</th>
+                    <th scope="col" sortable="name"> Start Date</th>
+                    <th scope="col" sortable="name"> End Date</th>
+                    <th scope="col" sortable="name"> URL/Link</th>
+                    <th scope="col" sortable="name"> Status</th>
+                    <th scope="col" sortable="population">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let responsedata of responsedata| paginate: {itemsPerPage: limit, currentPage: page, totalItems: collectionSize } let i=index;">
+                    <td>{{((page-1)*limit)+(i+1)}}</td>
+                    <td>{{ responsedata?.brand }}</td>
+                    <td>{{ responsedata?.title }}</td>
+                    <td>{{ customdate(responsedata?.startDate) }}</td>
+                    <td>{{ customdate(responsedata?.endDate)}}</td>
+                    <td>{{ responsedata?.urlLink }}</td>
+                    <td>{{(responsedata?.status==1)?'Pending':(responsedata?.status==2)?'Accepted':(responsedata?.status==3)?'Rejected':''}}</td>
+
+                    <td>
+                      <div class="form-group form-check-inline">
+                        <a [routerLink]="['/theme/modules/brand-advertisement/view-advertisement',responsedata?._id]"><i
+                            class="fa fa-eye text-success"></i></a> &nbsp;
+                        <a [routerLink]="['/theme/modules/brand-advertisement/edit-advertisement',responsedata?._id]"><i
+                            class="fa fa-pencil  ml-2"></i></a> &nbsp;
+                        <a href="javascript:void(0);" (click)="openpopup(deletepopup,responsedata._id)"><i
+                            class="fa fa-trash-o text-danger ml-2"></i></a> &nbsp;
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <pagination-controls *ngIf="collectionSize!=0 " (pageChange)="pagechange($event)" maxSize="5"
+                directionLinks="true" responsive="true" previousLabel="Previous" nextLabel="Next">
+              </pagination-controls>
+              </div>
+              <div class="col-md-6" *ngIf="collectionSize !=0 ">
+                <select class="custom-select pull-right" style="width: auto" (change)="limitchange($event)">
+                  <option Value=10>10 Requests per page</option>
+                  <option Value=15>15 Requests per page</option>
+                  <option Value=25> 25 Requests per page</option>
+                </select>
+              </div>
+            </div>  
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- popup delete start-->
+<ng-template #deletepopup let-modal>
+  <!----- Header  ------>
+  <section id="modal-header">
+    <div class="container-fluid">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to delete this Ad/Request? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-------------->
+  <section>
+    <div class="container-fluid frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-green" (click)="deletereq()">Yes</button>
+          <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- popup delete end-->

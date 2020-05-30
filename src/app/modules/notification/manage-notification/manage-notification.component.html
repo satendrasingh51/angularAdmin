@@ -1,0 +1,159 @@
+<h5 *ngIf="notification_msg" class="position-fixed push-top alert alert-success  m-0">Notification Send Successfully.
+</h5>
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-6">
+        <h4 class="mb-0">Manage Notification</h4>
+      </div>
+      <div class="col-sm-6 text-right">
+        <!-- <button class="btn btn-primary">Add Group</button> -->
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+<div class="container-fluid">
+  <form [formGroup]="notificationform" (ngSubmit)="sendNotification()">
+
+    <div class="form-group row pt-2">
+      <label class="col-sm-2 text-right">Title :</label>
+      <div class="col-sm-8">
+        <div class="md-form mt-0">
+          <input type="text" class="form-control form-duplicate" placeholder="xyz" formControlName="title"
+            maxlength="50">
+          <div *ngIf=" submited &&validation.title.errors" class="error-text text-danger">
+            <div *ngIf="validation.title.errors.required">Title is Required.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row pt-2">
+      <label class="col-sm-2 text-right">Description :</label>
+      <div class="col-sm-8">
+        <div class="md-form mt-0">
+          <textarea type="text" class="form-control" rows="3" placeholder="lorem ipsum ..."
+            formControlName="description" maxlength="400"></textarea>
+        </div>
+        <div *ngIf=" submited &&validation.description.errors" class="error-text text-danger">
+          <div *ngIf="validation.description.errors.required">Description is Required.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row ">
+      <label class="col-sm-2 text-right">Select Type :</label>
+      <div class="col-sm-3">
+        <select class="form-control"
+          (click)="openVerticallyCentered(($event.target.value==2)?(markrequest):(markrequest1),$event.target.value)"
+          [(ngModel)]="userttypereset" [ngModelOptions]="{standalone:true}">
+          <option value="0" >Select Type</option>
+          <option value="1" >User</option>
+          <option value="2">Brands</option>
+        </select>
+        <div *ngIf="typeuservalidation" class="text-danger"> Please select any User Type</div>
+        <div *ngIf="slecetuser_msg  &&!typeuservalidation" class="text-danger"> Please select any Brand/User. </div>
+      </div>
+    
+    </div>
+   
+
+    <div class="form-group row">
+      <div class="col-sm-2"></div>
+      <div class="col-sm-4">
+        <button type="submit" class="btn btn-green btn-md mr-2">Send</button>
+        <button type="button" class="btn btn-md mr-2 btn-danger" (click)="resetform()">Reset</button>
+      </div>
+    </div>
+
+  </form>
+</div>
+
+
+<ng-template #markrequest let-modal>
+  <section id="modal-header">
+    <div class="container">
+      <div class="text-center">
+        <h4> Please select Managers </h4>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="container frgtpass-btns mb-3 scroll" infiniteScroll [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="20" (scrolled)="onScroll1()" [scrollWindow]="false"
+      style="height: 400px; overflow-y: scroll;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Sr.N.</th>
+            <th>Brands</th>
+            <th>Select </th>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td></td>
+            <td> <input type="text" placeholder="Search Brands by Name, Email" (input)="search($event)"></td>
+            <td> <input type="checkbox" [(ngModel)]="ischeckedall1" (ngModelChange)="selectallmanagers()">All</td>
+          </tr>
+          <tr *ngFor="let managername of managerlistdata let i = index">
+            <td>{{i+1}}</td>
+            <td>{{managername?.brand}}</td>
+            <td><input type="checkbox" [(ngModel)]="managername.isChecked1"
+                (ngModelChange)="selectedmanagers(managername?.isChecked1)"> </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <div class="text-center">
+        <button type="button" (click)="selected()" class="btn btn-info "> Done</button>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+
+<ng-template #markrequest1 let-modal>
+  <div >
+    <section id="modal-header">
+      <div class="container">
+        <div class="text-center">
+          <h4> Please select Users </h4>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container frgtpass-btns mb-3 scroll" infiniteScroll [infiniteScrollDistance]="10" [infiniteScrollThrottle]="100" (scrolled)="onScroll()"
+      [scrollWindow]="false" style="height: 400px; overflow-y: scroll;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>S.N.</th>
+              <th>User</th>
+              <th>Select </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td> <input type="text" placeholder="Search Brands by Name, Email" (input)="searchuser($event)"></td>
+              <td> <input type="checkbox" [(ngModel)]="ischeckedall" (ngModelChange)="selectallusers()">All</td>
+            </tr>
+            <tr *ngFor="let users of userslistdata let i=index">
+              <td>{{i+1}}</td>
+              <td>{{users?.userName}}</td>
+              <td><input type="checkbox" [(ngModel)]="users.isChecked" (ngModelChange)="selectedusers(users.isChecked)">
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+        <div class="text-center">
+          <button type="button" (click)="selected()" class="btn btn-info ">Done</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</ng-template>

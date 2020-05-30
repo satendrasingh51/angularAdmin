@@ -1,0 +1,149 @@
+<section id="Blog-details">
+  <div class="container-fluid dis-dashboard">
+
+    <div class="row">
+      <div class="col-md-12">
+        <nav aria-label="breadcrumb h-10">
+          <ol class="bg-white breadcrumb">
+            <li class="breadcrumb-item"><a href="#" routerLink="/theme/modules/blog-management/blog-manage">Manage
+                Blogs</a></li>
+            <li class="breadcrumb-item active">View</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6">
+        <h4> {{'Blog Details'}}</h4>
+      </div>
+
+      <div *ngIf="deletemessage" class="position-fixed push-top alert alert-danger ">
+        <h5 class="mb-0"> Blog Deleted Successfully .</h5>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+
+</section>
+<section id="inner-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4">
+
+        <div class="card">
+          <img class="card-img-top" [src]="blog_data?.media ? blog_data?.media:'/admin/assets/images/dummy.jpg'" alt="Card image cap">
+        </div>
+        <!-- <div class="text-center">
+          <label>Image / Video of Blog
+            <input type="file" class="d-none">
+          </label>
+        </div> -->
+      </div>
+      <div class="col-md-8 mt-3">
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Title:</label>
+          </div>
+          <div class="col-md-9">
+            <label class="text-break">{{blog_data?.title}}</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold ">Caption</label>
+          </div>
+          <div class="col-md-9">
+            <label class="text-break">{{blog_data?.caption}}</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Quick Description:</label>
+          </div>
+          <div class="col-md-9">
+            <label>{{blog_data?.description}}</label>
+          </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Category:</label>
+          </div>
+          <div class="col-md-9">
+            <label *ngFor="let name of blog_data?.categoryId let i=index">
+              <span>{{name.category}}<span *ngIf="blog_data?.categoryId.length >1 && i<blog_data?.categoryId.length -1">,&nbsp;</span>
+              </span>
+            </label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Published date:</label>
+          </div>
+          <div class="col-md-9">
+            <label>{{published_date}}</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Last Update :</label>
+          </div>
+          <div class="col-md-9">
+            <label>{{last_update}}</label>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Quick Description:</label>
+          </div>
+          <div class="col-md-9">
+            <label class="text-break">{{blog_data?.description}}</label>
+          </div>
+        </div>
+
+
+
+
+        <div class="row form-group">
+          <div class="col-md-3">
+            <label class="font-weight-bold">Details:</label>
+          </div>
+          <div class="col-md-9">
+            <label [innerHTML]="blog_data?.detail" class="text-break"></label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 mb-5">
+        <div class="pull-right">
+          <button class="btn btn-green mr-4" (click)="editpageopen(blog_data?._id)">Edit</button>
+          <button class="btn btn-danger" (click)="openVerticallyCentered(content)">Delete</button>
+          <!-- [routerLink]="['/theme/modules/blog-management/edit-blogs/',blog_data?._id]" -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<ng-template #content let-modal>
+  <!----- Header  ------>
+  <section id="modal-header">
+
+    <div class="container">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to Delete this Blog? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-------------->
+  <section>
+    <div class="container frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="mr-5 btn btn-danger col-md-3" (click)="deleteblog()">Delete </button>
+
+
+          <button type="button" class="btn bg-info text-white ml-5 col-md-3" (click)="modal.close('Close click')">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>

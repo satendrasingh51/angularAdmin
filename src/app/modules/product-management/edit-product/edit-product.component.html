@@ -1,0 +1,163 @@
+<section id="Blog-details">
+  <div class="container-fluid dis-dashboard">
+    <div class="custom-breadcrumb">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="#" routerLink="/theme/modules/product-management/manage-products">Manage
+              Products</a></li>
+          <li class="breadcrumb-item active">Edit
+            Product</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="row">
+      <div class="col-lg-6">
+        <h4 class="mb-0"> {{'Edit Product'}}</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+</section>
+
+<h5 *ngIf="updatemsg" class="position-fixed push-top alert alert-success">Product Updated Successfully.</h5>
+
+<section id="inner-content">
+  <div class="container-fluid">
+    <form [formGroup]="Edit_product_form" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="mb-4">
+            <h5 class="text-center"> Change Logo</h5>
+            <div class="card-upload-image border-0">
+              <img class="" [src]="logoUrl" alt="Card image cap">
+            </div>
+            <div class="text-center">
+              <label class="text-info btn-default btn-file" style="cursor:pointer;">Change/Update logo <br> Image
+                <input type="file" class="d-none" (change)="changelogo($event)">
+          </label>
+            </div>
+          </div>
+
+          <div>
+            <h5 class="text-center">Change/Update Product Image</h5>
+            <div class="card-upload-image border-0">
+              <!-- assets\images\product-placeholder.jpg -->
+              <img class="" [src]="media" alt="Card image cap">
+            </div>
+            <div class="text-center">
+              <label class="text-info btn-default btn-file" style="cursor:pointer;">Change/Update <br> Image
+                <input type="file" class="d-none" (change)="onSelectFile($event)">
+                {{message}}
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Name :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" formControlName="pr_name" placeholder="Enter Name here..."
+                value="{{product_data_display?.name}}">
+              <div *ngIf=" submitted &&validation.pr_name.errors" class="error-text text-danger">
+                <div *ngIf="validation.pr_name.errors.required">Product Name is required.</div>
+                <div *ngIf="validation.pr_name.errors.maxlength">Product Name is Maximum 50 Character.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Brand :</label>
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" formControlName="pr_brand">
+                <option *ngFor="let brand of brandnames" >{{brand}}</option>
+              </select>
+              <div *ngIf=" submitted &&validation.pr_brand.errors" class="error-text text-danger">
+                <div *ngIf="validation.pr_brand.errors.required">Brand Name is required.</div>
+                <div *ngIf="validation.pr_brand.errors.maxlength">Brand Name is Maximum 50 Character.</div>
+              </div>
+            </div>
+            <!-- <div class="col-md-9">
+              <input class="form-control" type="text" formControlName="pr_brand" placeholder="Enter Brand here..."
+                value="{{product_data_display?.brand}}">
+              <div *ngIf=" submitted &&validation.pr_brand.errors" class="error-text text-danger">
+                <div *ngIf="validation.pr_brand.errors.required">Brand Name is required.</div>
+                <div *ngIf="validation.pr_brand.errors.maxlength">Brand Name is Maximum 50 Character.</div>
+              </div>
+            </div> -->
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Category :</label>
+            </div>
+            <div class="col-md-9">
+              <select id="category" class="form-control" (change)="onChange($event)" formControlName="pr_category">
+                <option *ngFor="let category of catgorylist" value="{{category._id}}">{{category.category}}</option>
+              </select>
+              <div *ngIf="submitted && validation.pr_category.errors" class="error-text text-danger">
+                <div *ngIf="validation.pr_category.errors.required"> Category is required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group" *ngIf="show_subcategory">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Sub Category :</label>
+            </div>
+            <div class="col-md-9">
+              <select class="form-control" formControlName="sub_category" [(ngModel)]="subCat"
+                (change)="onClick($event)">
+
+                <option *ngFor="let sub_cat of sub_categorylist" [selected]="subCat == sub_cat._id"
+                  value="{{sub_cat._id}}">{{sub_cat.category}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Direction :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" type="text" formControlName="pr_directiorn" placeholder="Enter text here..."
+                value="{{product_data_display?.directionOfUse}}">
+              <div *ngIf="submitted && validation.pr_directiorn.errors">
+                <div *ngIf="validation.pr_directiorn.errors.required" class="error-text text-danger"> Direction is
+                  required.</div>
+              </div>
+            </div>
+          </div>
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Added On :</label>
+            </div>
+            <div class="col-md-9">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="publisheddate" value="{{date}}">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-md-3 text-right">
+              <label class="font-weight-bold mt-1">Description : </label>
+            </div>
+            <div class="col-md-9">
+              <div class="editor-overflow">
+                <ck-editor name="editor1" [(ngModel)]="editorData" skin="moono-lisa" language="en" [fullPage]="true"
+                  [ngModelOptions]="{standalone: true}"></ck-editor>
+
+                <!-- <ckeditor [editor]="Editor" [(ngModel)]="editorData" [ngModelOptions]="{standalone: true}"></ckeditor> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-11 mb-5">
+          <div class="pull-right">
+            <button class="btn mr-4 btn-green text-white" type="submit">Update</button>
+            <button class="btn btn-orange" type="button"
+              routerLink="/theme/modules/product-management/manage-products">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

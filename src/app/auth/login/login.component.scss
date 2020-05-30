@@ -1,0 +1,58 @@
+//scss adnan
+
+#login-form{ 
+  label{
+    font-size:16px;
+    
+  }
+  input{
+    font-family: inherit;
+    
+    font-size: 16px;
+    
+
+  }
+  .login-btn{
+    background: white;
+  color: #17a2b8;
+  }
+  .login-btn:hover {
+    background-color:#00B5B8;
+    color: white!important;
+  }
+}
+.banner-img{
+  background: url(/images/login-background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover; 
+  height: 100vh; 
+ } 
+
+#modal-header{
+  .frgtpass-head {
+    h4 {
+      font-size: 24px;
+      margin:20px 0 37px;
+    }
+}
+}
+#forgot-pass-modal{
+  input{
+    border: none;
+    background-color: transparent;
+    border-bottom: 1px solid #d2d2d2;
+    width:94%
+  }
+  label{
+    font-size: 12px;
+  }
+  
+}
+.validation-msg{
+  margin-left: 140px;
+}
+.fa {
+  color: white !important;
+}

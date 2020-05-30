@@ -1,0 +1,87 @@
+<div class="sidebar testscroll">
+  <div class="brand-box">
+    <span class="brand-logo">
+      <img src="assets/images/grodoc-logo.svg" />
+    </span>
+  </div>
+  <div class="menu-list">
+    <ul class="list-unstyled">
+      <li class="active">
+        <a class="fa fa-home" routerLinkActive="active" routerLink="/theme/modules/dashboard"><span class="ml-3">Dashboard</span></a>
+      </li>
+      <li>
+        <a class="fa fa-user" routerLinkActive="active" routerLink="/theme/modules/user-management"><span class="ml-3">User Management</span></a>
+      </li>
+      <li>
+        <a class="fa fa-bold" routerLinkActive="active" routerLink="/theme/modules/blog-management"><span class="ml-3">Blog Management</span></a>
+      </li>
+      <li>
+        <a  class="fa fa-product-hunt" routerLinkActive="active" routerLink="/theme/modules/product-management"> <span class="ml-3" >Product Management</span></a>
+      </li>
+      <li>
+        <a class="fa fa-file-text" routerLinkActive="active" routerLink="/theme/modules/newsletter-management"><span class="ml-3">Newsletter Management</span></a>
+      </li>
+      <li>
+        <a class="fa fa-bell" routerLinkActive="active" routerLink="/theme/modules/notification"><span class="ml-3">Notification Management</span></a>
+      </li>
+      <li>
+        <a class="fa fa-buysellads" routerLinkActive="active" routerLink="/theme/modules/brand-advertisement"><span class="ml-3">Brand Advertisement</span></a>
+      </li>
+      <li>
+        <a class="fa fa-address-card" routerLinkActive="active" routerLink="/theme/modules/contactus/contact-manage"><span class="ml-3">Manage Contact</span></a>
+      </li>  
+      <li>
+        <a class="fa fa-address-card" routerLinkActive="active" routerLink="/theme/modules/subscription/"><span class="ml-3">Manage Subscription</span></a>
+      </li>
+      <li>
+          <a class="fa fa-bar-chart" routerLinkActive="active" routerLink="/theme/modules/report/"><span class="ml-3">Report Management</span></a>
+        </li>
+    </ul>
+  </div>
+</div>
+<!-- LOG OUT POP UP -->
+<ng-template #content let-modal>
+  <div class="modal-header popup-center logout">
+    <h4 class="modal-title text-center" id="modal-basic-title">{{'Logout'}}</h4>
+  </div>
+  <div class="modal-body text-center">
+    <div class="form-group">
+      <label class="position-static">{{'Are you sure want to logout ?'}}</label>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-secondary btn-outline" (click)="modal.close('Close click')">{{'Cancel'}}</button>
+      <button type="button" class="btn bg-info text-white btn-outline" (click)="logout()">{{'Logout'}}</button>
+    </div>
+  </div>
+</ng-template>
+<!------ Settings Popop --------->
+<ng-template #contenttu let-modal>
+  <div class="modal-header  popup-center modal-sm pb-1">
+    <h4 class="modal-title text-center" id="modal-basic-title">{{'Setting'}}</h4>
+  </div>
+  <div class="modal-body settings">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>{{'Change language'}}</label>
+      </div>
+      <div class="form-group ">
+        <span>
+          <!-- <input type="radio" id="test1"  value='english' formControlName="language" > -->
+          <input type="radio" id="test1" formControlName="language" value="en" [checked]="lang==='en'" />
+
+          <label for="test1">English</label>
+        </span>
+        <span class="radio-btn">
+          <input type="radio" id="test2" formControlName="language" value="ar" [checked]="lang==='ar'" />
+
+          <label for="test2">Arabic</label>
+        </span>
+      </div>
+      <div class="form-group text-center">
+        <button type="button" (click)="modal.close('Close click')"
+          class="btn btn-secondary btn-outline">{{'cancel'}}</button>
+        <button type="submit" class="btn bg-info text-white btn-outline">{{'Change'}}</button>
+      </div>
+    </form>
+  </div>
+</ng-template>

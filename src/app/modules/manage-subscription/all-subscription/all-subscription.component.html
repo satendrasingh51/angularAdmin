@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="row justify-content-between align-items-center">
+    <div class="col-md-5">
+      <h4 class="mb-0"> Manage Subscription</h4>
+    </div>
+    <div class="col-md-3 text-right">
+      <button class="ml-2 btn btn-green" [routerLink]="['add']" routerLinkActive="router-link-active" type="button">Add
+        Plan</button>
+    </div>
+  </div>
+  <hr class="hr-border">
+</div>
+
+<div *ngIf="delete_msg" class="position-fixed push-top alert alert-danger">
+  <h5 class="mb-0">Subscription  deleted Successfully.</h5>
+</div>
+
+
+<div class='container-fluid mt-5 mb-5'>
+  <div class="row">
+    <div class="col-md-4 mb-4" *ngFor="let card of subscriberlist" >
+      <div class="subscription-card silver">
+        <div >
+        <div class="subscription-head">
+          <div class="heading d-flex justify-content-center align-items-center p-1">
+            <p class="ml-auto">{{card?.title}}</p>
+              <div class="ml-auto"><i *ngIf="card?.type!=2" (click)="openVerticallyCentered(deleteplan,card?._id)"
+                class="text-white fa fa-trash"></i>
+              </div>
+          </div>
+          <div class="money">
+            <h1>{{(card?.cost==0)?'FREE':card?.cost}}</h1>
+          </div>
+          <div class="subscriber">
+            <h5 class="text-center">0</h5>
+            <p class="text-center">Subscriber</p>
+          </div>
+        </div>
+        <div class="body">
+          <div class="description"  >
+            <div class="description-wrap" >
+              <p>A dedicated brand page on our nutrient comparison section</p>
+              <p>Listings for all of your plant nutrient products on our website & app</p>
+              <p>Product listings include:</p>
+              <ul>
+                <li *ngFor="let data of card?.privilage">{{data}}</li>
+              
+              </ul>
+              <p>Products are linked to our social grow log</p>
+              <p>Liquid nutrients are linked to our nutrient calculator database</p>
+            </div>
+          </div>
+          <div class="s-footer">
+            <a  [routerLink]="['view',card?._id]" class="btn btn-block btn-green rounded-0">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- <div class="col-md-4">
+      <div class="subscription-card silver">
+        <div class="subscription-head">
+          <div class="heading d-flex justify-content-center align-items-center p-1">
+            <p class="ml-auto">Featured</p>
+            <div class="ml-auto"><i (click)="openVerticallyCentered(deleteplan)"
+                class="text-white fa fa-trash"></i></div>
+          </div>
+          <div class="money">
+            <h1><sup>₹</sup>0.00</h1>
+          </div>
+          <div class="subscriber">
+            <h5 class="text-center">5</h5>
+            <p class="text-center">Subscriber</p>
+          </div>
+        </div>
+        <div class="body">
+          <div class="description">
+            <div class="description-wrap">
+              <h2>Includes all the features of the Basic Package</h2>
+              <p>Brand logo is displayed as a featured brand on our homepage & nutrient comparison page</p>
+              <p>Brand admin portal allows you to manage product listings & add/edit bio text to your brand page</p>
+              <p>Select up to 5 products to be displayed as featured product adverts on our homepage & throughout the
+                website & app</p>
+              <p>Your featured products are shown first on our nutrient comparison page</p>
+              <p>Brand admin portal displays analytic reports for featured product advert impressions</p>
+            </div>
+          </div>
+          <div class="s-footer">
+            <a [routerLink]="['view']" class="btn btn-block btn-green rounded-0">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div> -->
+    <!-- <div class="col-md-4">
+      <div class="subscription-card silver">
+        <div class="subscription-head">
+          <div class="heading d-flex justify-content-center align-items-center p-1">
+            <p class="ml-auto">Premium</p>
+            <div class="ml-auto"><i (click)="openVerticallyCentered(deleteplan)"
+                class="text-white fa fa-trash"></i></div>
+          </div>
+          <div class="money">
+            <h1><sup>₹</sup>0.00</h1>
+          </div>
+          <div class="subscriber">
+            <h5 class="text-center">5</h5>
+            <p class="text-center">Subscriber</p>
+          </div>
+        </div>
+        <div class="body">
+          <div class="description">
+            <div class="description-wrap">
+              <h2>Includes everything from the Basic & Featured Package</h2>
+              <p>Upload a 300 x 250 px advert with a link to your chosen URL - displayed throughout the website & app
+              </p>
+              <p>Adverts can be changed at any time through your brand user portal (subject to approval)</p>
+              <p>300 x 250 px adverts are displayed above Featured product adverts</p>
+              <p>Brand admin portal includes additional analytic reports for:</p>
+              <ul>
+                <li>Product page views</li>
+                <li>Views of grow logs using your brand</li>
+                <li>Advert views</li>
+                <li>Advert clicks</li>
+              </ul>
+              <p>Entitled to 6 social media promotional posts per year from GroDoc</p>
+              <p>Your brand logo is displayed in our newsletter as a sponsor</p>
+            </div>
+          </div>
+          <div class="s-footer">
+            <a [routerLink]="['view']" class="btn btn-block btn-green rounded-0">View Details</a>
+          </div>
+
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>
+
+
+
+<!--modal for delete confirmation starts here-->
+
+<ng-template #deleteplan let-modal>
+  <!----- Header  ------>
+  <section id="modal-header">
+    <div class="container-fluid">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to Remove this Subscription Plan? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-------------->
+  <section>
+    <div class="container-fluid frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-12 text-center">
+          <button type="button" class="btn btn-green" (click)="plandelete()">Yes</button>
+          <button type="button" class="ml-3 btn btn-danger" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!--modal for delete plan confirmation ends here-->

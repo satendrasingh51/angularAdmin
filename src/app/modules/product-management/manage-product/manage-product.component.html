@@ -1,0 +1,233 @@
+<section id="Blog-details" class="">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-6">
+        <h4 class="mb-0"> Manage Products</h4>
+      </div>
+    </div>
+    <hr class="hr-border" />
+  </div>
+
+</section>
+<h5 *ngIf="delete_msg" class="position-fixed push-top alert alert-danger"> Product deleted Successfully.</h5>
+<h5 *ngIf="reviewdelete_msg" class="position-fixed push-top alert alert-danger">Review deleted Successfully.</h5>
+<h5 *ngIf="imoportcsvsuccessmsg" class="position-fixed push-top alert alert-success"> Products Imported Successfully.</h5>
+<section id="inner">
+  <div class="container-fluid">
+    <div class="row pb-3">
+      <div class="col-md-4 mt-2 form-group d-inline">
+        <div class="search-driver input-group">
+          <input type="text" class="form-control pl-2 " placeholder="Search..." (keydown)="searchdata($event)"
+            maxlength="30">
+        </div>
+      </div>
+      <div class="col-md-8 mt-2 col-sm-12">
+        <div class="row pr-3 pl-3 pull-right">
+          <!-- <div style="position: relative;">
+          <input id="csv-import" type="file"  accept=".csv" style="position: absolute;opacity: 0;width: 100%; cursor:pointer;" (change)="importcsv($event)">
+          <button class="btn btn-primary"> Import Csv</button>
+          </div> -->
+          <button type="button" (click)="downloadcsvformat()" class="btn-green mr-2 btn"> Download CSV fomrat</button>
+          <div >
+            <label class="text-info h-100 btn-default btn-file" style="cursor:pointer">
+            <span class="btn btn-green h-100 d-flex align-items-center">Import CSV</span>
+            <input  class="d-none" type="file" (change)="importcsv($event)"></label>
+          </div>
+          <button type="button" class="ml-2 btn btn-green text-white" (click)="exporttocsv()">Export to CSV </button>
+          <button type="button" routerLink="/theme/modules/product-management/add-product" routerLinkActive='active'
+            class="ml-2 btn btn-orange ">Add Product</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container-fluid">
+    <form [formGroup]="filter_product_form" (ngSubmit)="onSubmit()">
+      <div class="row" id="filter">
+        <div class="col-md-4">
+          <label for="adding date">
+            <h6>Date:</h6>
+          </label>
+          <div class="form-group mt-2 form-inline">
+            <label class="pull-left mr-2" for="datepicker">From </label>
+            <input class="form-control input-adjust" (click)="d2.toggle()" placeholder="DD/MM/YYYY" name="dp2"
+              ngbDatepicker #d2="ngbDatepicker" [readonly]="true" (ngModelChange)="fromDate($event)"
+              [maxDate]="maxDate1" formControlName="from_date">
+
+            <label class="pull-left  mr-2 ml-2" for="datepicker">To</label>
+            <input class="form-control input-adjust" (click)="d3.toggle()" placeholder="DD/MM/YYYY" name="dp3"
+              ngbDatepicker #d3="ngbDatepicker" [readonly]="true" (ngModelChange)="toDate1($event)" [minDate]="minDate1"
+              [maxDate]="maxDate" formControlName="to_date">
+          </div>
+        </div>
+        <div class="col-md-4">
+            <label for="adding date">
+                <h6>Category :</h6>
+              </label>
+              <div class="form-group mt-2 form-inline">
+                <select class="form-control" formControlName="category">
+                  <option value="">All</option>
+                  <option *ngFor="let category of categorylists" value="{{category?._id}}">{{category?.category}}</option>
+                </select>
+              </div>
+        </div>
+        <div class="col-md-4 mt-4">
+          <div class="text-right mt-3">
+            <button class="btn btn-orange text-white" type="submit">Filter</button>
+            <button class="btn btn-danger ml-2" type="button" (click)="reset()">Reset</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+<section id="data-table">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card mb-4">
+          <div class="card-text">
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead class="btn-green text-white">
+                  <tr>
+                    <!-- <th scope="col">Sr. No.</th> -->
+                    <th scope="col" sortable="name">Sr. No.</th>
+                    <th scope="col" sortable="area">Name</th>
+                    <th scope="col" sortable="area">Brand</th>
+                    <th scope="col" sortable="area">Category</th>
+                    <th scope="col" sortable="population">Added On</th>
+                    <th class="text-center" scope="col" sortable="name">Rating & Review</th>
+                    <th scope="col" sortable="population"> Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    *ngFor="let products of product_list | paginate: {itemsPerPage: limit, currentPage: page, totalItems: collectionsize } let i=index">
+                    <td>{{(page-1)*limit+(i+1)}}</td>
+                    <td>{{ products.name }}</td>
+                    <td>{{products.brand}}</td>
+                    <td *ngIf="products.categoryData.length==0"></td>
+                    <td *ngFor=" let category of products.categoryData">{{category.category}}</td>
+                    <td>{{ customdate (products.created)}}</td>
+
+                    <td class="text-center"><a href="javascript:void(0);"
+                        (click)="openVerticallyCentered(ratingpopup,products._id,products.ratingReview,products.userData,products?.averageRating)">{{customrating(products?.averageRating)}}</a>
+                    </td>
+                    <td><span><a [routerLink]="['/theme/modules/product-management/view-product',products._id]"
+                          routerLinkActive="active"><i class="fa mr-2 fa-eye text-success"></i></a>
+
+                        <a [routerLink]="['/theme/modules/product-management/edit-product',products._id]"
+                          routerLinkActive="active"><i class="fa mr-2 fa-pencil text-secondary"></i> </a>
+                        <i class="fa mr-2 fa-trash-o text-warning"
+                          (click)="openVerticallyCentered(deletepopup,products._id)" style="cursor:pointer"></i>
+                      </span>
+                    </td>
+
+                  </tr>
+                </tbody>
+              </table>
+             
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <pagination-controls *ngIf="collectionsize !=0 " (pageChange)="loadpage($event)" maxSize="5"
+                  directionLinks="true" responsive="true" previousLabel="Previous" nextLabel="Next">
+                </pagination-controls>
+              </div>
+
+              <div class="col-md-6" *ngIf="collectionsize !=0 ">
+                <select class="custom-select pull-right" style="width: auto" (change)="limitchange($event)">
+                  <option Value=10>10 Products per page</option>
+                  <option Value=15>15 Products per page</option>
+                  <option Value=25> 25 Products per page</option>
+                </select>
+              </div>
+            </div>
+            <div *ngIf="collectionsize==0" class="text-center"><span>No Data found</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<!-- #delete popup start -->
+<ng-template #deletepopup let-modal>
+
+  <section id="modal-header">
+    <div class="container-fluid">
+      <div class="row p-4">
+        <div class="col-md-12 frgtpass-head">
+          <h4 class="text-center"> Are you sure want to delete this Product? </h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid frgtpass-btns mb-3">
+      <div class="row mt-3">
+        <div class="col-md-6 text-center">
+          <button type="button" class="btn  btn-danger col-md-8" (click)="deleteproduct()">Yes</button>
+
+        </div>
+        <div class="col-md-6 text-center">
+          <button type="button" class="btn col-md-8 btn-green" (click)="modal.close('Close click')">No
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</ng-template>
+
+<!-- #delete popup end -->
+<ng-template #ratingpopup let-modal>
+  <section id="modal-header">
+    <div class="modal-header justify-content-center">
+      <h4 class="modal-title">Rating & Review</h4>
+
+    </div>
+  </section>
+  <div class="modal-body ">
+    <div class="row ratings">
+      <ul class="pl-0 ml-0">
+        <li class="fa fa-star"
+          [ngClass]="(product_averageRating==0.0)?'fa-star':(product_averageRating>0.0 && product_averageRating < 1.0)?'fa-star-half-o':'faactive'">
+        </li>
+        <li class="fa fa-star"
+          [ngClass]="(product_averageRating>1.0 && product_averageRating < 2.0)?'fa-star-half-o':(product_averageRating==2.0||product_averageRating >2.0)?'faactive':'fa-star'">
+        </li>
+        <li class="fa fa-star"
+          [ngClass]="(product_averageRating>2.0 && product_averageRating < 3.0)?'fa-star-half-o':(product_averageRating==3.0||product_averageRating >3.0)?'faactive':'fa-star'">
+        </li>
+        <li class="fa fa-star"
+          [ngClass]="(product_averageRating>3.0 && product_averageRating < 4.0)?'fa-star-half-o':(product_averageRating==4.0||product_averageRating >4.0)?'faactive':'fa-star'">
+        </li>
+        <li class="fa fa-star"
+          [ngClass]="(product_averageRating>4.0 && product_averageRating < 5.0)?'fa-star-half-o':(product_averageRating==5.0)?'faactive':'fa-star'">
+        </li>
+      </ul>
+    </div>
+    <div class="row">
+      <div class="col-md-12" *ngFor="let data of productdisplayonpopup">
+        <div class="d-flex justify-content-between align-items-center">
+          <label class="font-weight-bold">name:{{userData[0]?.userName}}</label>
+          <button class="btn btn-danger" (click)="deletereview(data)">Delete</button>
+        </div>
+        <p>{{data?.review}} </p>
+      </div>
+
+    </div>
+  </div>
+  <section id="modal-header">
+    <div class="modal-footer justify-content-center">
+      <button type="button" class="btn  btn-green" (click)="modal.close('Close click')">Cancel
+      </button>
+
+    </div>
+  </section>
+</ng-template>

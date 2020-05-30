@@ -1,0 +1,35 @@
+.theme{
+    height: 100vh;
+    .sidenav-wrapper{
+        width: 263px;
+        position: relative;
+        z-index: 1000;
+    }
+    .main-container{
+        width: calc(100% - 225px);
+        height: 100%;
+        
+        .header-wrapper{
+            height: 70px;
+            position: fixed;
+            z-index: 10;
+            width: 100%;
+            top: 0;
+            right: 0;
+        }
+        .content-wrapper{
+        height: calc(100% - 70px);
+        margin-top: 70px;
+            // min-height: calc(100% - 140px);
+            .content-inner{
+                // height: calc(100% - 92px);
+                // padding-top:76px;
+                padding: 10px 0 0 0;
+
+            }
+            .footer-wrapper{
+                background-color: red;
+            }
+        }
+    }
+}

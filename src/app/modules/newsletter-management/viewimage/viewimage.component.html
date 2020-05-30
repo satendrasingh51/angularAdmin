@@ -1,0 +1,35 @@
+<section id="user-details">
+  <div class="container-fluid dis-dashboard">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="custom-breadcrumb">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a routerLink="/theme/modules/newsletter-management/manage-newsletter">Subscriber Images</a>
+              </li>
+            </ol>
+          </nav>
+        </div>
+
+      </div>
+    </div>
+    <hr class="hr_adjust">
+  </div>
+</section>
+
+<section class="pb-2" id="inner-content">
+  <div class="container-fluid">
+
+    <div class="row ">
+      <div class="col-md-3 mb-4 newsletter-img" *ngFor="let data of reposnedata" >
+        <img  *ngIf="data.type=='image'" class="h-100 w-100 img-thumbnail" bind-src="data?.imageUrl" alt="">
+        <video *ngIf="data.type=='video'"  width="320" height="240">
+          <source [src]="data.imageUrl" type="video/mp4">
+        </video>
+      </div>
+    </div>
+   
+  </div>
+
+
+</section>
