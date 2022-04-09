@@ -40,7 +40,7 @@
     "jszip": "^3.2.2",
     "jszip-utils": "^0.1.0",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "ng-multiselect-dropdown": "^0.2.3",
     "ng2-charts": "^2.2.5",
     "ngx-bootstrap": "^4.2.0",
